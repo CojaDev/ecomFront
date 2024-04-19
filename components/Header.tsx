@@ -7,7 +7,6 @@ import { VARIANTS } from '@/constants/header';
 interface Variant {
   header: string;
   shoe: any;
-  dotsImg: any;
   color: string;
   height: number;
   width: number;
