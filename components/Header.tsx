@@ -12,7 +12,7 @@ interface Variant {
   width: number;
 }
 
-const Header: React.FC = () => {
+const HeaderHome: React.FC = () => {
   const [headerData, setHeaderData] = useState<Variant | null>(null);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Header: React.FC = () => {
           headerData.header.split(' ').map((word, index) => (
             <h2
               key={index}
-              className="md:text-[11rem] text-8xl text-white font-serif antialiased"
+              className="md:text-[11rem] text-8xl text-white font-serif  headerText "
             >
               {word}
               <br />
@@ -87,13 +87,12 @@ const Header: React.FC = () => {
           className="select-none object-cover"
         />
       </div>
-
       {/* Bouncing arrow */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        strokeWidth={1.5}
+        strokeWidth={2.5}
         stroke="currentColor"
         className="w-8 h-8 text-white  absolute bottom-4 left-2/4 -translate-x-2/4 animate-bounce-slow"
       >
@@ -107,4 +106,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default HeaderHome;

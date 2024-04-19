@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -27,18 +27,41 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from './ui/theme-toggle';
 import Link from 'next/link';
 import { useMediaQuery } from '@/hooks/media-query';
+import { getStore } from '@/lib/action';
 
 const Nav = () => {
-  //const [store, setStore] = useState([]);
-  // useEffect(() => {
-  //  axios.get('ecom-admin-coja.vercel.app/api/store').then((res: any) => {
-  //   setStore(res.data);
-  //   });
-  // }, []);
+  interface Admin {
+    name: string;
+    email: string;
+    img?: string;
+  }
+
+  interface StoreData {
+    name: string;
+    description: string;
+    address?: string;
+    currency: string;
+    admins: Admin[];
+    fb?: string;
+    ig?: string;
+    yt?: string;
+    customLink?: string;
+  }
+
+  const [storeData, setStoreData] = useState<StoreData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const store = await getStore();
+      setStoreData(store);
+    };
+
+    fetchData();
+  }, []);
 
   const isDesktop = useMediaQuery('(max-width: 768px)');
   return !isDesktop ? (
-    <nav className="flex w-full justify-between px-4  top-0   min-h-16 ">
+    <nav className="flex w-full justify-between px-6  top-0   min-h-16 ">
       <div className="flex items-center gap-2 justify-between w-full ">
         <ModeToggle />
         <NavigationMenu className="px-2 py-4  w-full  justify-between md:flex hidden">
@@ -59,8 +82,8 @@ const Nav = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref>
-                <h2 className="font-medium text-4xl mt-0.5 cursor-pointer mx-10 font-serif select-none">
-                  Trendster.
+                <h2 className="font-medium text-4xl mt-0.5 min-w-[100px] text-center cursor-pointer mx-10 font-serif select-none">
+                  {storeData && storeData.name}.
                 </h2>
               </Link>
             </NavigationMenuItem>
@@ -81,7 +104,10 @@ const Nav = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <Button variant={'outline'} className="px-2">
+        <Button
+          variant={'outline'}
+          className="px-3 flex gap-2 font-serif text-xl"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -96,12 +122,15 @@ const Nav = () => {
               d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
             />
           </svg>
+          cart (0)
         </Button>
       </div>
     </nav>
   ) : (
     <nav className="  bg-white dark:bg-[#0C0A09] px-5 py-4 flex w-full min-h-16  justify-between md:hidden items-center">
-      <h2 className="font-semibold text-2xl mt-1">Trendster.</h2>
+      <h2 className="font-semibold text-2xl mt-1">
+        {storeData && storeData.name}.
+      </h2>
 
       <Button variant={'outline'} className=" ml-auto mr-2 px-2">
         <svg
@@ -140,7 +169,9 @@ const Nav = () => {
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle className="text-2xl mt-9">Trendster.</DrawerTitle>
+              <DrawerTitle className="text-2xl mt-9">
+                {storeData && storeData.name}.
+              </DrawerTitle>
             </DrawerHeader>
             <DrawerFooter>
               <NavigationMenuMobile>

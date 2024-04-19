@@ -1,11 +1,13 @@
 import HeaderHome from '@/components/Header';
 import Layout from '@/components/Layout';
-import Nav from '@/components/Nav';
+import React from 'react';
 
-export default function Home() {
+const Home = () => {
   return (
     <Layout>
       <HeaderHome />
     </Layout>
   );
-}
+};
+
+export default Home;

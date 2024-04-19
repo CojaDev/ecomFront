@@ -112,7 +112,7 @@ body {
 @keyframes moveDownup {
   0%,
   100% {
-    transform: translateY(20px);
+    transform: translateY(8px);
   }
   50% {
     transform: translateY(0px);
@@ -126,7 +126,6 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  animation: moveUpDown 2.5s ease-in-out infinite alternate; /* Apply animation */
 }
 .shape3,
 .shape4 {
@@ -138,21 +137,23 @@ body {
 
 /* Positioning of the background shapes */
 .shape1 {
-  top: 10%;
+  top: 12%;
   left: 5%;
+  animation: moveUpDown 2.2s ease-in-out infinite alternate;
 }
 
 .shape2 {
-  bottom: 15%;
+  bottom: 12%;
   right: 5%;
+  animation: moveUpDown 2.8s ease-in-out infinite alternate;
 }
 .shape3 {
-  top: 2%;
+  top: 4%;
   left: 2%;
 }
 
 .shape4 {
-  bottom: 7%;
+  bottom: 4%;
   right: 2%;
 }
 
@@ -161,5 +162,8 @@ body {
   animation: moveUpDown 3.5s ease-in-out infinite alternate; /* Apply animation */
 }
 .dots {
-  animation: moveDownup 5s ease-in-out infinite alternate;
+  animation: moveUpDown 5s ease-in-out infinite alternate;
+}
+.headerText {
+  animation: moveDownup 4.2s ease-in-out infinite alternate; /* Apply animation */
 }
