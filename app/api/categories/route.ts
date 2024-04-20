@@ -1,4 +1,4 @@
-import Store from '../../models/Store';
+import Store from '../../models/Category';
 import { mongooseConnect } from '../../../lib/mongoose';
 import { NextResponse } from 'next/server';
 

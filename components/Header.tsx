@@ -20,12 +20,10 @@ const HeaderHome: React.FC = () => {
     setHeaderData(VARIANTS[randomIndex]);
   }, []);
 
-  // Add a fallback to prevent rendering null before headerData is set
   if (!headerData) {
-    // Default header data to show while loading
     return (
       <header className="relative h-[90vh] bg-[#3498db] w-screen flex  md:flex-row flex-col-reverse justify-center items-center overflow-hidden md:pb-0 px-2 pb-20">
-        <h2 className="md:text-[11rem] text-8xl text-white font-serif antialiased">
+        <h2 className="md:text-[11rem] text-8xl text-white dark:text-black font-serif antialiased">
           Loading...
         </h2>
       </header>
@@ -38,10 +36,10 @@ const HeaderHome: React.FC = () => {
       style={{ backgroundColor: headerData?.color }}
     >
       {/* Background shapes */}
-      <div className="shape1 md:block hidden" />
-      <div className="shape2 md:block hidden" />
-      <div className="shape3 animate-spin-slow  md:block hidden" />
-      <div className="shape4 animate-spin-slow  md:block hidden" />
+      <div className="shape1 md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape2 md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape3 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape4 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
 
       <div className="relative flex flex-col gap-2">
         {/* Split header into words and add line breaks */}
@@ -49,7 +47,7 @@ const HeaderHome: React.FC = () => {
           headerData.header.split(' ').map((word, index) => (
             <h2
               key={index}
-              className="md:text-[11rem] text-8xl text-white font-serif  headerText "
+              className="xl:text-[11rem] md:text-[10rem] text-8xl dark:text-[#0f0f0f] text-white font-serif z-0 headerText "
             >
               {word}
               <br />
@@ -63,11 +61,11 @@ const HeaderHome: React.FC = () => {
             width={169}
             height={163}
             draggable={false}
-            className="select-none absolute bottom-7 dots -right-16 "
+            className="select-none absolute bottom-7 dots -right-16 z-20 dark:invert"
           />
         </div>
         <Button
-          className="w-[30%] rounded-none select-none ml-2 text-xl dark:bg-white dark:text-black border-0 dark:hover:bg-gray-200 !py-5 font-serif"
+          className="w-[30%] rounded-none z-20 select-none ml-2 text-xl  border-0  !py-5 font-serif"
           variant={'outline'}
         >
           Explore
@@ -88,13 +86,14 @@ const HeaderHome: React.FC = () => {
         />
       </div>
       {/* Bouncing arrow */}
+
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={2.5}
         stroke="currentColor"
-        className="w-8 h-8 text-white  absolute bottom-4 left-2/4 -translate-x-2/4 animate-bounce-slow"
+        className="w-8 h-8 text-white dark:text-[#0C0A09]  absolute  bottom-4  -translate-x-2/4 animate-bounce-slow"
       >
         <path
           strokeLinecap="round"

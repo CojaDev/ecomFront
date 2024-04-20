@@ -7,6 +7,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
 import {
   NavigationMenuMobile,
@@ -27,7 +29,7 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from './ui/theme-toggle';
 import Link from 'next/link';
 import { useMediaQuery } from '@/hooks/media-query';
-import { getStore } from '@/lib/action';
+import { getStore, getCategories } from '@/lib/action';
 
 const Nav = () => {
   interface Admin {
@@ -59,6 +61,26 @@ const Nav = () => {
     fetchData();
   }, []);
 
+  interface categoryData {
+    map(
+      arg0: (category: any, index: number) => import('react').JSX.Element
+    ): import('react').ReactNode;
+    name: string;
+    images: string;
+    index: number;
+  }
+
+  const [categoryData, setCategoryData] = useState<categoryData | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const categories = await getCategories();
+      setCategoryData(categories);
+    };
+
+    fetchData();
+  }, []);
+
   const isDesktop = useMediaQuery('(max-width: 768px)');
   return !isDesktop ? (
     <nav className="flex w-full justify-between px-6  top-0   min-h-16 ">
@@ -75,15 +97,33 @@ const Nav = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/store" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuTrigger className="relative">
                   Store
-                </NavigationMenuLink>
+                </NavigationMenuTrigger>
               </Link>
+              {categoryData && (
+                <NavigationMenuContent className="flex flex-col gap-2 p-2">
+                  {categoryData &&
+                    categoryData?.map((category: any, index: number) => (
+                      <Link
+                        key={index}
+                        href={'/store?' + category.name.toLowerCase()}
+                        className="w-full  flex  overflow-hidden"
+                      >
+                        <NavigationMenuLink
+                          className={navigationMenuTriggerStyle()}
+                        >
+                          <h2 className=" font-serif">{category.name}</h2>
+                        </NavigationMenuLink>
+                      </Link>
+                    ))}
+                </NavigationMenuContent>
+              )}
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref>
                 <h2 className="font-medium text-4xl mt-0.5 min-w-[100px] text-center cursor-pointer mx-10 font-serif select-none">
-                  {storeData && storeData.name}.
+                  {storeData && storeData.name + '.'}
                 </h2>
               </Link>
             </NavigationMenuItem>

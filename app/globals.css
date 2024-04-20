@@ -166,4 +166,5 @@ body {
 }
 .headerText {
   animation: moveDownup 4.2s ease-in-out infinite alternate; /* Apply animation */
+  line-height: 0.8;
 }
