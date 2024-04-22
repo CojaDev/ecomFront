@@ -1,5 +1,5 @@
 'use client';
-import { getProducts, getStore } from '@/lib/action';
+import { getProducts, getStore } from '@/components/action';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
