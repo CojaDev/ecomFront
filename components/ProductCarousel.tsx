@@ -60,7 +60,7 @@ const ProductCarousel = ({ product, index, currency }: StoreData) => {
       </Link>
       <div className="flex flex-col p-2 relative py-3 text-black">
         <p className="text-sm opacity-90">{product.category}</p>
-        <hr className="opacity-35" />
+        <hr className="opacity-40" />
         <h2 className="text-black text-xl font-serif mt-1.5">{product.name}</h2>
         <h3 className="text-xl font-medium font-serif">
           {product.price} {currency}

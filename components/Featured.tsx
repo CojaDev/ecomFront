@@ -11,7 +11,6 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import ProductCarousel from './ProductCarousel';
-import { Currency } from 'lucide-react';
 
 const Featured = () => {
   interface productData {
