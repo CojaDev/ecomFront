@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import { VARIANTS } from '@/constants/header';
 
 interface Variant {
@@ -64,12 +65,14 @@ const HeaderHome: React.FC = () => {
             className="select-none absolute bottom-7 dots -right-16 z-20 dark:invert"
           />
         </div>
-        <Button
-          className="w-[30%] rounded-none z-20 select-none ml-2 text-xl  border-0  !py-5 font-serif"
-          variant={'outline'}
-        >
-          Explore
-        </Button>
+        <Link href="/store" legacyBehavior passHref draggable={false}>
+          <Button
+            className="w-[30%] rounded-none z-20 select-none ml-2 text-xl  border-0  !py-5 font-serif"
+            variant={'outline'}
+          >
+            Explore
+          </Button>
+        </Link>
       </div>
 
       {/* Shoe image */}

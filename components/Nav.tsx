@@ -86,17 +86,17 @@ const Nav = () => {
     <nav className="flex w-full justify-between px-6  top-0   min-h-16 ">
       <div className="flex items-center gap-2 justify-between w-full ">
         <ModeToggle />
-        <NavigationMenu className="px-2 py-4  w-full  justify-between md:flex hidden">
+        <NavigationMenu className="px-2 py-4  w-full  justify-between md:flex hidden select-none">
           <NavigationMenuList className="gap-5">
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/" legacyBehavior passHref draggable={false}>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Home
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/store" legacyBehavior passHref>
+              <Link href="/store" legacyBehavior passHref draggable={false}>
                 <NavigationMenuTrigger className="relative">
                   Store
                 </NavigationMenuTrigger>
@@ -108,6 +108,7 @@ const Nav = () => {
                       <Link
                         key={index}
                         href={'/store?' + category.name.toLowerCase()}
+                        draggable={false}
                         className="w-full  flex  overflow-hidden"
                       >
                         <NavigationMenuLink
@@ -121,21 +122,21 @@ const Nav = () => {
               )}
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/" legacyBehavior passHref draggable={false}>
                 <h2 className="font-medium text-4xl mt-0.5 min-w-[100px] text-center cursor-pointer mx-10 font-serif select-none">
                   {storeData && storeData.name + '.'}
                 </h2>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/about" legacyBehavior passHref>
+              <Link href="/about" legacyBehavior passHref draggable={false}>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   About
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/contact" legacyBehavior passHref>
+              <Link href="/contact" legacyBehavior passHref draggable={false}>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Contact
                 </NavigationMenuLink>

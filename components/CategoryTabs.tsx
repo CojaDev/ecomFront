@@ -36,6 +36,7 @@ const CategoryTabs = () => {
             <Link
               key={index}
               href={'/store?' + category.name.toLowerCase()}
+              draggable={false}
               className="flex-1 relative overflow-hidden"
             >
               <Image
@@ -45,7 +46,7 @@ const CategoryTabs = () => {
                 draggable={false}
                 placeholder="empty"
                 alt="img"
-                className="object-cover h-full w-full hover:scale-110 transition-all "
+                className="object-cover h-full w-full hover:scale-110 transition-all grayscale  hover:grayscale-0"
               />
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-black/20 flex justify-center items-center">
                 <h2 className="text-white text-[3.5rem] font-serif">
