@@ -1,5 +1,5 @@
 'use client';
-import { getProducts, getStore } from '@/components/action';
+
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +11,16 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import ProductCarousel from './ProductCarousel';
+import axios from 'axios';
 
+export const getProducts = async () => {
+  const products = await axios.get('/api/products');
+  return products.data;
+};
+export const getStore = async () => {
+  const store = await axios.get('/api/store');
+  return store.data;
+};
 const Featured = () => {
   interface productData {
     map(
