@@ -26,11 +26,14 @@ const Featured = () => {
   }
 
   const [productsData, setProductsData] = useState<productData | null>(null);
+  const [storeData, setStoreData] = useState<StoreData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const categories = await getProducts();
+      const store = await getStore();
       setProductsData(categories);
+      setStoreData(store);
     };
 
     fetchData();
@@ -40,19 +43,8 @@ const Featured = () => {
     currency: string;
   }
 
-  const [storeData, setStoreData] = useState<StoreData | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const store = await getStore();
-      setStoreData(store);
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <section className="flex flex-col w-full gap-8 p-10 justify-center items-center ">
+    <section className="flex flex-col w-full gap-6 p-10 justify-center items-center ">
       <div className="w-screen flex flex-col gap-1.5 justify-center items-center">
         <h2 className="text-5xl font-serif text-center">Featured</h2>
         <div className="md:w-[5%] w-[28%] bg-black dark:bg-white h-1" />

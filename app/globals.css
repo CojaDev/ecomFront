@@ -168,3 +168,8 @@ body {
   animation: moveDownup 4.2s ease-in-out infinite alternate; /* Apply animation */
   line-height: 0.8;
 }
+.transition-all-slow {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
