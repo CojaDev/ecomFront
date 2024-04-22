@@ -13,7 +13,7 @@ import axios from 'axios';
 const Featured = () => {
   interface productData {
     map(
-      arg0: (product: productData, index: number) => import('react').JSX.Element
+      arg0: (product: productData) => import('react').JSX.Element
     ): import('react').ReactNode;
     name: string;
     category: string;
@@ -25,19 +25,24 @@ const Featured = () => {
   const [productsData, setProductsData] = useState<productData | null>(null);
   const [storeData, setStoreData] = useState<StoreData | null>(null);
 
-  const fetchData = async () => {
-    try {
-      const categories = await axios.get('/api/products');
-      const store = await axios.get('/api/store');
-      setProductsData(categories.data);
-      setStoreData(store.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  // Fetch data when the component is rendered
-  fetchData();
+  useEffect(() => {
+    axios
+      .get(`/api/products`)
+      .then((response) => {
+        setProductsData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+      });
+    axios
+      .get(`/api/store`)
+      .then((response) => {
+        setStoreData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
 
   interface StoreData {
     currency: string;
@@ -54,10 +59,9 @@ const Featured = () => {
           <CarouselContent className="p-2 gap-2 m-4">
             {productsData &&
               storeData &&
-              productsData?.map((product: any, index: number) => (
+              productsData?.map((product: any) => (
                 <ProductCarousel
                   product={product}
-                  index={index}
                   currency={storeData?.currency}
                 />
               ))}

@@ -13,17 +13,16 @@ interface Product {
 
 interface StoreData {
   product: Product;
-  index: number;
   currency: string;
 }
 
-const ProductCarousel = ({ product, index, currency }: StoreData) => {
+const ProductCarousel = ({ product, currency }: StoreData) => {
   const [isImgHovered, setIsImgHovered] = useState(0);
   const [heartFill, setHeartFill] = useState('none');
 
   return (
     <CarouselItem
-      key={index}
+      key={product._id}
       className="relative sm:basis-1/4 basis1/1 border p-0 border-black bg-white"
     >
       <Link
