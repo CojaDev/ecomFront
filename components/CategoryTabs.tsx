@@ -1,5 +1,5 @@
 'use client';
-import { getCategories } from '@/components/action';
+import { getCategories } from '@/lib/action';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';

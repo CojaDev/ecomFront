@@ -29,7 +29,7 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from './ui/theme-toggle';
 import Link from 'next/link';
 import { useMediaQuery } from '@/hooks/media-query';
-import { getStore, getCategories } from '@/components/action';
+import { getStore, getCategories } from '@/lib/action';
 
 const Nav = () => {
   interface Admin {

@@ -1,8 +1,6 @@
 'use client';
-
+import { getProducts, getStore } from '@/lib/action';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import {
   Carousel,
   CarouselContent,
@@ -12,15 +10,6 @@ import {
 } from '@/components/ui/carousel';
 import ProductCarousel from './ProductCarousel';
 import axios from 'axios';
-
-export const getProducts = async () => {
-  const products = await axios.get('/api/products');
-  return products.data;
-};
-export const getStore = async () => {
-  const store = await axios.get('/api/store');
-  return store.data;
-};
 const Featured = () => {
   interface productData {
     map(
@@ -36,16 +25,19 @@ const Featured = () => {
   const [productsData, setProductsData] = useState<productData | null>(null);
   const [storeData, setStoreData] = useState<StoreData | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const categories = await getProducts();
-      const store = await getStore();
-      setProductsData(categories);
-      setStoreData(store);
-    };
+  const fetchData = async () => {
+    try {
+      const categories = await axios.get('/api/products');
+      const store = await axios.get('/api/store');
+      setProductsData(categories.data);
+      setStoreData(store.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-    fetchData();
-  }, []);
+  // Fetch data when the component is rendered
+  fetchData();
 
   interface StoreData {
     currency: string;
