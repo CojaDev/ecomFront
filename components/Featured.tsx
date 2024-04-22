@@ -56,7 +56,6 @@ const Featured = () => {
               productsData?.map((product: any, index: number) => (
                 <ProductCarousel
                   product={product}
-                  index={index}
                   currency={storeData?.currency}
                 />
               ))}
