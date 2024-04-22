@@ -1,6 +1,8 @@
 'use client';
 import { getProducts, getStore } from '@/lib/action';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   Carousel,
   CarouselContent,
@@ -9,11 +11,11 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import ProductCarousel from './ProductCarousel';
-import axios from 'axios';
+
 const Featured = () => {
   interface productData {
     map(
-      arg0: (product: productData) => import('react').JSX.Element
+      arg0: (product: productData, index: number) => import('react').JSX.Element
     ): import('react').ReactNode;
     name: string;
     category: string;
@@ -26,22 +28,14 @@ const Featured = () => {
   const [storeData, setStoreData] = useState<StoreData | null>(null);
 
   useEffect(() => {
-    axios
-      .get(`/api/products`)
-      .then((response) => {
-        setProductsData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching products:', error);
-      });
-    axios
-      .get(`/api/store`)
-      .then((response) => {
-        setStoreData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching products:', error);
-      });
+    const fetchData = async () => {
+      const categories = await getProducts();
+      const store = await getStore();
+      setProductsData(categories);
+      setStoreData(store);
+    };
+
+    fetchData();
   }, []);
 
   interface StoreData {
@@ -59,9 +53,10 @@ const Featured = () => {
           <CarouselContent className="p-2 gap-2 m-4">
             {productsData &&
               storeData &&
-              productsData?.map((product: any) => (
+              productsData?.map((product: any, index: number) => (
                 <ProductCarousel
                   product={product}
+                  index={index}
                   currency={storeData?.currency}
                 />
               ))}
