@@ -1,4 +1,3 @@
-'use client';
 import { mongooseConnect } from './mongoose';
 import axios from 'axios';
 
