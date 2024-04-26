@@ -23,7 +23,9 @@ const CategoryTabs = () => {
 
     fetchData();
   }, []);
-
+  if (!categoryData) {
+    return null;
+  }
   return (
     <section className="flex flex-col w-full gap-8 p-10 justify-center items-center ">
       <div className="w-screen flex flex-col gap-1.5 justify-center items-center">

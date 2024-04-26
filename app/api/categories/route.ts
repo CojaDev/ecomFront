@@ -1,16 +1,16 @@
-import Store from '../../models/Category';
+import Category from '../../models/Category';
 import { mongooseConnect } from '../../../lib/mongoose';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: any) {
   try {
     await mongooseConnect();
-    const store = await Store.find();
-    return NextResponse.json(store);
+    const category = await Category.find();
+    return NextResponse.json(category);
   } catch (error) {
-    console.error('Error fetching store:', error);
+    console.error('Error fetching category:', error);
     return NextResponse.json(
-      { message: 'Failed to fetch store' },
+      { message: 'Failed to fetch category' },
       { status: 500 }
     );
   }

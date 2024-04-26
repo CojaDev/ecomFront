@@ -56,10 +56,19 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           />
         )}
       </Link>
-      <div className="flex flex-col p-2 relative py-3 text-black">
-        <p className="text-sm opacity-90">{product.category}</p>
+      <div className="flex flex-col p-2 relative py-3 text-black select-none">
+        <Link
+          href={'/store?' + product.category.toLowerCase()}
+          draggable={false}
+        >
+          <p className="text-sm opacity-90">{product.category}</p>
+        </Link>
         <hr className="opacity-40" />
-        <h2 className="text-black text-xl font-serif mt-1.5">{product.name}</h2>
+        <Link href={'/store/' + product._id} draggable={false}>
+          <h2 className="text-black text-xl font-serif mt-1.5">
+            {product.name}
+          </h2>
+        </Link>
         <h3 className="text-xl font-medium font-serif">
           {product.price} {currency}
         </h3>
