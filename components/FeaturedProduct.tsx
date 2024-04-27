@@ -61,10 +61,10 @@ const FeaturedProduct = () => {
   }
 
   return (
-    <section className="w-screen flex  gap-4  justify-evenly items-center py-20 my-5 px-4 bg-[#120F0D] dark:bg-white dark:text-black text-white">
-      <div className="flex  gap-4  justify-center items-center">
-        <div className="flex flex-col gap-4 ">
-          <h2 className="text-7xl font-bold font-serif">
+    <section className="relative w-screen flex  gap-4  justify-evenly items-center py-20 my-5 px-4 bg-[#120F0D] dark:bg-white dark:text-black text-white">
+      <div className="flex md:flex-row flex-col  md:gap-5 gap-10 justify-center items-center">
+        <div className="flex flex-col gap-4 md:text-left text-center ">
+          <h2 className="md:text-7xl text-6xl font-bold font-serif">
             {featuredProduct.name}
           </h2>
           <p className="text-lg">{randomSlogan}</p>
@@ -75,14 +75,14 @@ const FeaturedProduct = () => {
             draggable={false}
           >
             <Button
-              className="w-[30%] dark:text-white hover:opacity-95 text-black rounded-none z-20 select-none ml-0.5 text-xl  border-0  !py-5 font-serif"
+              className="md:w-[30%] w-full dark:text-white hover:opacity-95 text-black rounded-none z-20 select-none ml-0.5 text-xl  border-0  !py-5 font-serif"
               variant={'outline'}
             >
               Explore
             </Button>
           </Link>
         </div>
-        <div className="relative w-80 h-80 cursor-pointer">
+        <div className="relative w-80 h-80 cursor-pointer  rounded-[40%] overflow-hidden">
           <Link
             href={`/store?${featuredProduct._id}`}
             legacyBehavior
@@ -94,12 +94,16 @@ const FeaturedProduct = () => {
               layout="fill"
               objectFit="cover"
               alt={featuredProduct.name}
-              className="h-full rounded-[45%]"
+              className="h-full featured "
               draggable={false}
             />
           </Link>
         </div>
       </div>
+      <div className="shape1 md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape2 md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape3 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape4 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
     </section>
   );
 };

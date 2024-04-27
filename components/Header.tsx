@@ -67,7 +67,7 @@ const HeaderHome: React.FC = () => {
         </div>
         <Link href="/store" legacyBehavior passHref draggable={false}>
           <Button
-            className="w-[30%] rounded-none z-20 select-none ml-2 text-xl  border-0  !py-5 font-serif"
+            className="md:w-[30%] w-[60%] rounded-none z-20 select-none ml-0.5 text-xl  border-0  !py-5 font-serif"
             variant={'outline'}
           >
             Explore

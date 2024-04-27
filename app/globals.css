@@ -108,6 +108,15 @@ body {
     transform: translateY(-20px);
   }
 }
+@keyframes movelilUpDown {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
 
 @keyframes moveDownup {
   0%,
@@ -160,6 +169,9 @@ body {
 /* Shoe image animation */
 .shoeContainer {
   animation: moveUpDown 3.5s ease-in-out infinite alternate; /* Apply animation */
+}
+.featured {
+  animation: movelilUpDown 3.5s ease-in-out infinite alternate; /* Apply animation */
 }
 .dots {
   animation: moveUpDown 5s ease-in-out infinite alternate;
