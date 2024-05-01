@@ -7,6 +7,13 @@ import Link from 'next/link';
 import { FaInstagram, FaLink, FaYoutube } from 'react-icons/fa6';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { IoLogoYoutube } from 'react-icons/io5';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
 const Footer = () => {
   interface StoreData {
     name: string;
@@ -61,16 +68,19 @@ const Footer = () => {
           <p className="opacity-60">
             Email: {storeData.name.toLowerCase()}@gmail.com
           </p>
-          <div className="flex gap-1">
-            <p className="opacity-60">Instagram: </p>
-            <a
-              href={storeData.ig}
-              target="blank"
-              className="opacity-85 hover:opacity-100 transition-all-slow"
-            >
-              {storeData.ig.replace('https://www.instagram.com/', '#')}
-            </a>
-          </div>
+          {storeData.ig && (
+            <div className="flex gap-1">
+              <p className="opacity-60">Instagram: </p>
+              <a
+                href={storeData.ig}
+                target="blank"
+                className="opacity-85 hover:opacity-100 transition-all-slow"
+              >
+                {storeData.ig.replace('https://www.instagram.com/', '@')}
+              </a>
+            </div>
+          )}
+
           {((storeData.yt && isValidUrl(storeData.yt)) ||
             (storeData.ig && isValidUrl(storeData.ig)) ||
             (storeData.fb && isValidUrl(storeData.fb)) ||
@@ -139,12 +149,12 @@ const Footer = () => {
 
         <div className="flex flex-col gap-2 flex-1">
           <h2 className="font-serif text-3xl mb-2">Get Help</h2>
-          <p className="opacity-60 ">Contact Us</p>
-          <p className="opacity-60">Delivery Information</p>
-          <p className="opacity-60">Sale Terms & Conditions</p>
-          <p className="opacity-60">Privacy Notice</p>
-          <p className="opacity-60">Shopping FAQs</p>
-          <p className="opacity-60">Returns & Refunds</p>
+          <p className="opacity-60 cursor-pointer ">Contact Us</p>
+          <p className="opacity-60 cursor-pointer">Delivery Information</p>
+          <p className="opacity-60 cursor-pointer">Sale Terms & Conditions</p>
+          <p className="opacity-60 cursor-pointer">Privacy Notice</p>
+          <p className="opacity-60 cursor-pointer">Shopping FAQs</p>
+          <p className="opacity-60 cursor-pointer">Returns & Refunds</p>
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
@@ -160,21 +170,38 @@ const Footer = () => {
           ))}
         </div>
 
-        <div className="flex flex-col gap-2 flex-1">
-          <h2 className="font-serif text-3xl mb-2">Get in touch</h2>
-          <p className="opacity-90">{storeData.address}</p>
-          <p className="opacity-90">
-            Email: {storeData.name.toLowerCase()}@gmail.com
-          </p>
-          <p className="opacity-90">
-            Instagram:{' '}
-            <a href={storeData.ig} target="blank">
-              {storeData.ig.replace('https://www.instagram.com/', '#')}
-            </a>
-          </p>
+        <div className="flex flex-col gap-1.5 flex-1">
+          <h2 className="font-serif text-3xl mb-0">FAQ.</h2>
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>How long does shipping take?</AccordionTrigger>
+              <AccordionContent>
+                Standard shipping takes 3 business days. Delivery times vary
+                based on your location and selected shipping method.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>
+                Do you offer international shipping?
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes, we offer international shipping to most countries. Shipping
+                rates and delivery times may vary depending on the destination.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>
+                What payment methods do you accept?
+              </AccordionTrigger>
+              <AccordionContent>
+                We accept Stripe payments for online transactions and offer
+                payment on delivery for added convenience.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
-      <hr className="max-w-[1450px] w-full opacity-55 mt-auto" />
+      <hr className="max-w-[1450px] w-full opacity-55 mt-auto md:block hidden" />
       <div className="flex max-w-[1450px] w-full py-6 justify-between">
         <h2>
           © {currentYear} {storeData.name}. All Rights Reserved.

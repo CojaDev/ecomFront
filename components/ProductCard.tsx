@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { CarouselItem } from '@/components/ui/carousel';
 import toast from 'react-hot-toast';
+
 interface Product {
   name: string;
   category: string;
@@ -9,26 +10,33 @@ interface Product {
   _id: string;
   images: string[];
 }
-
 interface StoreData {
-  product: Product;
   currency: string;
 }
 
-const ProductCarousel = ({ product, currency }: StoreData) => {
+interface Store {
+  product: Product;
+  storeData: StoreData;
+}
+const ProductCard = ({ product, storeData }: Store) => {
   const [isImgHovered, setIsImgHovered] = useState(0);
   const [heartFill, setHeartFill] = useState('none');
-
   return (
-    <CarouselItem className="relative sm:basis-full md:basis-1/3 lg:basis-1/4 border p-0 border-black bg-white">
+    <div className="relative border p-0 border-black bg-white dark:bg-white/20 dark:text-white max-w-[300px]">
       <Link
         href={`/store/${product._id}`}
         draggable={false}
         className="overflow-hidden flex flex-col gap-2 justify-center w-full "
+        onMouseEnter={() => {
+          setIsImgHovered(1);
+        }}
+        onMouseLeave={() => {
+          setIsImgHovered(0);
+        }}
       >
         {product.images.length > 1 ? (
           <div
-            className="w-full overflow-hidden select-none min-h-[300px] max-h-[300px] border-b border-black/40 transition-all-slow "
+            className="w-full overflow-hidden select-none max-h-[300px] max-w-[300px] min-h-[300px] min-w-[300px] border-b border-black/40 transition-all-slow"
             onMouseEnter={() => {
               setIsImgHovered(1);
             }}
@@ -43,7 +51,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           />
         ) : (
           <div
-            className="w-full overflow-hidden select-none min-h-[300px] max-h-[300px] border-b border-black/40 transition-all "
+            className="w-full overflow-hidden select-none max-h-[300px] max-w-[300px] min-h-[300px] min-w-[300px]  border-b border-black/40 transition-all"
             style={{
               backgroundImage: `url(${product.images[0]})`,
               backgroundSize: 'cover',
@@ -52,26 +60,25 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           />
         )}
       </Link>
-      <div className="flex flex-col p-2 relative py-3 text-black select-none">
+      <div className="flex flex-col p-2 relative py-3 text-black dark:text-white select-none">
         <Link
-          href={'/store?' + product.category.toLowerCase()}
+          href={`/store/${product.category.toLowerCase()}`}
           draggable={false}
         >
           <p className="text-sm opacity-90">{product.category}</p>
         </Link>
         <hr className="opacity-40" />
-        <Link href={'/store/' + product._id} draggable={false}>
-          <h2 className="text-black text-xl font-serif mt-1.5">
+        <Link href={`/store/${product._id}`} draggable={false}>
+          <h2 className="text-black dark:text-white text-xl font-serif mt-1.5">
             {product.name}
           </h2>
         </Link>
         <h3 className="text-xl font-medium font-serif">
-          {product.price} {currency}
+          {product.price} {storeData.currency}
         </h3>
-
         <div className="flex gap-0.5 absolute right-5 bottom-4">
           <button
-            className=" p-1"
+            className="p-1"
             onClick={() => {
               toast.success('Added to cart');
             }}
@@ -92,7 +99,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
             </svg>
           </button>
           <button
-            className=" p-1"
+            className="p-1"
             onClick={() => {
               toast.success('Added to Wishlist');
             }}
@@ -116,8 +123,8 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           </button>
         </div>
       </div>
-    </CarouselItem>
+    </div>
   );
 };
 
-export default ProductCarousel;
+export default ProductCard;

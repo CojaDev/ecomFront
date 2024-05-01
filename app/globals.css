@@ -185,3 +185,12 @@ body {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
+.boxShadow {
+  box-shadow: inset 0 0 5px grey;
+}
+.boxShadow-md {
+  box-shadow: inset 0 0 2.25px grey;
+}
+.boxShadow-sm {
+  box-shadow: inset 0 0 1.5px grey;
+}

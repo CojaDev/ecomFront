@@ -63,7 +63,7 @@ const FeaturedProduct = () => {
   return (
     <section className="relative w-screen flex  gap-4  justify-evenly items-center py-20 my-5 px-4 bg-[#120F0D] dark:bg-white dark:text-black text-white">
       <div className="flex md:flex-row flex-col  md:gap-5 gap-10 justify-center items-center">
-        <div className="flex flex-col gap-4 md:text-left text-center ">
+        <div className="relative flex flex-col gap-4 md:text-left text-center ">
           <h2 className="md:text-7xl text-6xl font-bold font-serif">
             {featuredProduct.name}
           </h2>
@@ -81,6 +81,16 @@ const FeaturedProduct = () => {
               Explore
             </Button>
           </Link>
+          <div className="animate-pulse-slow">
+            <Image
+              src="/img/dots.png"
+              alt="dots"
+              width={169}
+              height={163}
+              draggable={false}
+              className="select-none md:block absolute hidden -bottom-10 dots right-5 z-20 dark:invert lg:max-w-[8.5rem] max-w-[7rem]"
+            />
+          </div>
         </div>
         <div className="relative w-80 h-80 cursor-pointer  rounded-[40%] overflow-hidden">
           <Link
@@ -89,19 +99,19 @@ const FeaturedProduct = () => {
             passHref
             draggable={false}
           >
-            <Image
-              src={featuredProduct.images[0]}
-              layout="fill"
-              objectFit="cover"
-              alt={featuredProduct.name}
-              className="h-full featured "
-              draggable={false}
+            <div
+              className="w-full overflow-hidden select-none min-h-full max-h-full transition-all  featured"
+              style={{
+                backgroundImage: `url(${featuredProduct.images[0]})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             />
           </Link>
         </div>
       </div>
-      <div className="shape1 md:block hidden dark:bg-[#0C0A09]" />
-      <div className="shape2 md:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape1 lg:block hidden dark:bg-[#0C0A09]" />
+      <div className="shape2 lg:block hidden dark:bg-[#0C0A09]" />
       <div className="shape3 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
       <div className="shape4 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
     </section>

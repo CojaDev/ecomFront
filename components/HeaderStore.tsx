@@ -12,8 +12,11 @@ interface Variant {
   height: number;
   width: number;
 }
+interface title {
+  title: string;
+}
 
-const HeaderHome: React.FC = () => {
+const HeaderStore = ({ title }: title) => {
   const [headerData, setHeaderData] = useState<Variant | null>(null);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const HeaderHome: React.FC = () => {
 
   if (!headerData) {
     return (
-      <header className="relative h-[90dvh] bg-[#3498db] w-screen flex  md:flex-row flex-col-reverse justify-center items-center overflow-hidden md:pb-0 px-2 pb-20">
+      <header className="relative h-[45dvh] bg-[#3498db] w-screen flex  md:flex-row flex-col-reverse justify-center items-center overflow-hidden md:pb-0 px-2 pb-20">
         <h2 className="md:text-[11rem] text-8xl text-white dark:text-black font-serif antialiased">
           Loading...
         </h2>
@@ -33,27 +36,18 @@ const HeaderHome: React.FC = () => {
 
   return (
     <header
-      className={`relative h-[90dvh] bg-[#3498db] w-[100dvw] flex  md:flex-row flex-col-reverse justify-center items-center   overflow-hidden md:pb-0 px-2  pb-20`}
+      className={`relative h-[45dvh] bg-[#3498db] w-screen flex  md:flex-row flex-col-reverse justify-center items-center   overflow-hidden md:pb-0 px-2  `}
       style={{ backgroundColor: headerData?.color }}
     >
-      {/* Background shapes */}
       <div className="shape1 md:block hidden dark:bg-[#0C0A09]" />
       <div className="shape2 md:block hidden dark:bg-[#0C0A09]" />
       <div className="shape3 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
       <div className="shape4 animate-spin-slow  md:block hidden dark:bg-[#0C0A09]" />
 
       <div className="relative flex flex-col gap-2">
-        {/* Split header into words and add line breaks */}
-        {headerData &&
-          headerData.header.split(' ').map((word, index) => (
-            <h2
-              key={index}
-              className="xl:text-[11rem] md:text-[10rem] text-8xl dark:text-[#0f0f0f] text-white font-serif z-0 headerText "
-            >
-              {word}
-              <br />
-            </h2>
-          ))}
+        <h2 className="xl:text-[9rem] md:text-[8rem] text-8xl dark:text-[#0f0f0f] text-white font-serif z-20 headerText ">
+          {title}
+        </h2>
 
         <div className="animate-pulse-slow">
           <Image
@@ -62,33 +56,10 @@ const HeaderHome: React.FC = () => {
             width={169}
             height={163}
             draggable={false}
-            className="select-none absolute bottom-7 dots -right-16 z-20 dark:invert"
+            className="select-none absolute -bottom-9 dots -right-28 z-0 dark:invert"
           />
         </div>
-        <Link href="/store" legacyBehavior passHref draggable={false}>
-          <Button
-            className="md:w-[30%] w-[60%] rounded-none z-20 select-none ml-0.5 text-xl  border-0  !py-5 font-serif"
-            variant={'outline'}
-          >
-            Explore
-          </Button>
-        </Link>
       </div>
-
-      {/* Shoe image */}
-      <div className="shoeContainer">
-        <Image
-          src={headerData?.shoe}
-          alt="shoe"
-          width={headerData?.width || 0}
-          height={headerData?.height || 0}
-          placeholder="empty"
-          priority={true}
-          draggable={false}
-          className="select-none object-cover"
-        />
-      </div>
-      {/* Bouncing arrow */}
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -108,4 +79,4 @@ const HeaderHome: React.FC = () => {
   );
 };
 
-export default HeaderHome;
+export default HeaderStore;
