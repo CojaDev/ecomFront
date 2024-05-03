@@ -60,7 +60,7 @@ const Footer = () => {
     return null;
   }
   return (
-    <footer className="w-screen flex flex-col gap-2 bg-[#120F0D] text-white dark:bg-white dark:text-black mt-16 min-h-[36rem] py-4 px-6  items-center">
+    <footer className="w-screen flex flex-col gap-2 bg-[#120F0D] text-white dark:bg-white dark:text-black mt-28 min-h-[36rem] py-4 px-6  items-center">
       <div className="flex md:flex-row flex-col md:gap-2 gap-6 max-w-[1450px] w-full pt-16 ">
         <div className="flex flex-col gap-2 flex-1">
           <h2 className="font-serif text-3xl mb-2">Contact Info</h2>

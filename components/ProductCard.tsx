@@ -22,7 +22,7 @@ const ProductCard = ({ product, storeData }: Store) => {
   const [isImgHovered, setIsImgHovered] = useState(0);
   const [heartFill, setHeartFill] = useState('none');
   return (
-    <div className="relative border p-0 border-black bg-white dark:bg-white/20 dark:text-white max-w-[300px]">
+    <div className="relative border p-0 border-black bg-white dark:bg-white/20 dark:text-white max-w-[300px] max-h-[407px]">
       <Link
         href={`/store/${product._id}`}
         draggable={false}

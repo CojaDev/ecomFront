@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,6 +7,8 @@ import { getProducts, getStore } from '@/lib/action';
 import toast from 'react-hot-toast';
 import Select from 'react-select';
 import ProductCard from './ProductCard';
+import { Slider } from '@/components/ui/slider';
+import CustomSlider from './CustomSlider';
 
 interface ProductData {
   name: string;
@@ -15,6 +17,7 @@ interface ProductData {
   images: string[];
   index: number;
   title: string;
+  sizes: [string];
   description: string;
   _id: string;
 }
@@ -31,8 +34,13 @@ const Products = () => {
   >(null);
   const [priceOrder, setPriceOrder] = useState<'asc' | 'desc'>('asc');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [productsPerRow, setProductsPerRow] = useState<number>(4);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [minPrice, setMinPrice] = useState<number>(0);
+  const [maxPrice, setMaxPrice] = useState<number>(0);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
+  const productsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +50,14 @@ const Products = () => {
         setProductsData(products);
         setFilteredProducts(products);
         setStoreData(store);
+
+        // Determine maximum price
+        const prices = products.map((product: any) => parseInt(product.price));
+        const maxPriceValue = Math.max(...prices) + 10;
+        const minPriceValue = Math.min(...prices);
+        setMaxPrice(maxPriceValue);
+        setMinPrice(minPriceValue);
+        setPriceRange([minPriceValue, maxPriceValue]);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -52,7 +68,15 @@ const Products = () => {
 
   useEffect(() => {
     filterProducts();
-  }, [priceOrder, selectedCategory, productsData]);
+  }, [
+    priceOrder,
+    selectedCategory,
+    selectedSizes,
+    productsData,
+    minPrice,
+    maxPrice,
+    priceRange,
+  ]);
 
   const filterProducts = () => {
     if (!productsData) return;
@@ -62,11 +86,21 @@ const Products = () => {
         (product) => product.category === selectedCategory
       );
     }
-    filtered.sort((a, b) => {
+    if (selectedSizes.length > 0) {
+      filtered = filtered.filter((product) =>
+        product.sizes.some((size) => selectedSizes.includes(size))
+      );
+    }
+    filtered = filtered.filter(
+      (product) =>
+        parseInt(product.price) >= priceRange[0] &&
+        parseInt(product.price) <= priceRange[1]
+    );
+    filtered.sort((a: any, b: any) => {
       if (priceOrder === 'asc') {
-        return parseFloat(a.price) - parseFloat(b.price);
+        return a.price - b.price;
       } else {
-        return parseFloat(b.price) - parseFloat(a.price);
+        return b.price - a.price;
       }
     });
     setFilteredProducts(filtered);
@@ -89,9 +123,57 @@ const Products = () => {
     window.scrollTo({ top: 500, behavior: 'smooth' });
   };
 
-  const productsPerPage = 12; // Adjust as needed
+  const productsPerPage = 3 * productsPerRow; // Adjust as needed
   const totalProducts = filteredProducts?.length || 0;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
+  const minPagesToShow = 3; // Adjust as needed
+
+  const firstPage = 1;
+  const lastPage = totalPages;
+  let pagesToShow = [];
+
+  if (totalPages <= minPagesToShow) {
+    pagesToShow = Array.from({ length: totalPages }, (_, i) => i + 1);
+  } else {
+    const pagesBeforeCurrent = currentPage - 1;
+    const pagesAfterCurrent = currentPage + 1;
+
+    if (currentPage <= pagesBeforeCurrent + 1) {
+      pagesToShow = Array.from({ length: minPagesToShow - 1 }, (_, i) => i + 1);
+      if (
+        currentPage !== firstPage &&
+        currentPage !== lastPage &&
+        currentPage !== firstPage + 1
+      ) {
+        pagesToShow.push(currentPage);
+        if (currentPage !== lastPage - 1) pagesToShow.push(pagesAfterCurrent);
+      } else {
+        if (currentPage !== firstPage && currentPage !== lastPage)
+          pagesToShow.push(currentPage + 1);
+      }
+      pagesToShow.push(totalPages);
+    } else if (currentPage >= totalPages - pagesAfterCurrent) {
+      pagesToShow.push(1);
+      pagesToShow.push('...');
+      pagesToShow = pagesToShow.concat(
+        Array.from(
+          { length: minPagesToShow - 1 },
+          (_, i) => totalPages - minPagesToShow + 2 + i
+        )
+      );
+    } else {
+      pagesToShow.push(1);
+      pagesToShow.push('...');
+      pagesToShow = pagesToShow.concat(
+        Array.from(
+          { length: minPagesToShow - 3 },
+          (_, i) => currentPage - pagesBeforeCurrent + 1 + i
+        )
+      );
+      pagesToShow.push('...');
+      pagesToShow.push(totalPages);
+    }
+  }
 
   const customStyles = {
     control: (provided: any) => ({
@@ -128,6 +210,37 @@ const Products = () => {
     },
   ];
 
+  const handleSizeChange = (size: string) => {
+    if (selectedSizes.includes(size)) {
+      setSelectedSizes(selectedSizes.filter((s) => s !== size));
+    } else {
+      setSelectedSizes([...selectedSizes, size]);
+    }
+  };
+
+  const getAllSizes = (): string[] => {
+    if (!productsData) return [];
+    const allSizes: string[] = [];
+    productsData.forEach((product) => {
+      if (product.sizes.length > 0) {
+        if (product.sizes[0] !== '') {
+          product.sizes.forEach((size) => {
+            if (!allSizes.includes(size)) {
+              allSizes.push(size);
+            }
+          });
+        }
+      }
+    });
+    return allSizes;
+  };
+
+  const allSizes = getAllSizes();
+
+  const handleSliderChange = (values: number[]) => {
+    setPriceRange([values[0], values[1]]);
+  };
+
   if (!filteredProducts || !storeData) {
     return null;
   }
@@ -135,7 +248,7 @@ const Products = () => {
   return (
     <section className="w-full flex flex-col">
       <div
-        className="filter flex w-full justify-between items-center pl-0 pr-4 py-5 mx-auto"
+        className="filter flex w-full justify-between items-center md:pl-0 md:pr-4 px-4 py-5 mx-auto"
         style={{
           maxWidth: 316 * productsPerRow + 'px',
         }}
@@ -159,22 +272,71 @@ const Products = () => {
         </button>
       </div>
       <div className="content flex md:flex-row flex-col w-full gap-2 relative justify-center">
-        <div className="category p-2 flex flex-col gap-2 md:absolute relative left-0 ">
-          <h2 className="font-serif text-3xl">Categories</h2>
-          {Array.from(
-            new Set(productsData?.map((product) => product.category) || [])
-          ).map((category) => (
-            <div key={category}>
-              <button onClick={() => handleCategoryChange(category)}>
-                {category}
-              </button>
+        <div
+          className="categories px-2 flex flex-col gap-2 md:absolute relative left-0  md:w-[15%] w-full"
+          ref={productsRef}
+        >
+          <div className="PriceFilter p-2 flex flex-col gap-2">
+            <h2 className="font-serif text-3xl">Filter by Price</h2>
+            <div className="w-[25%] h-[3px] bg-black/80 dark:bg-white -mt-2" />
+            <div className=" mt-3 flex flex-col gap-1">
+              <CustomSlider
+                min={minPrice}
+                max={maxPrice}
+                step={10}
+                values={priceRange}
+                onChange={handleSliderChange}
+                currency={storeData.currency}
+              />
             </div>
-          ))}
+          </div>
+          <div className="category p-2 flex flex-col gap-2">
+            <h2 className="font-serif text-3xl">Product Categories</h2>
+            <div className="w-[25%] h-[3px] bg-black/80 dark:bg-white -mt-2" />
+            <div>
+              <button onClick={() => setSelectedCategory(null)}>All</button>
+            </div>
+            {Array.from(
+              new Set(productsData?.map((product) => product.category) || [])
+            ).map((category) => (
+              <div key={category}>
+                <button onClick={() => handleCategoryChange(category)}>
+                  {category}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="sizes p-2 flex flex-col gap-2">
+            <h2 className="font-serif text-3xl">Size</h2>
+            <div className="w-[25%] h-[3px] bg-black/80 dark:bg-white -mt-2" />
+            <div className="flex gap-2 flex-wrap ">
+              {allSizes.map((size) => (
+                <Button
+                  key={size}
+                  onClick={() => handleSizeChange(size)}
+                  className="border-black/50 dark:border-white/60"
+                  variant={selectedSizes.includes(size) ? 'default' : 'outline'}
+                >
+                  {size}
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
+
         <div
           className={`products flex flex-wrap mx-auto gap-4 md:justify-start justify-center`}
-          style={{ maxWidth: 312 * productsPerRow + 'px' }}
+          style={{
+            maxWidth: 312 * productsPerRow + 'px',
+
+            minHeight: productsRef.current?.clientHeight + 'px',
+          }}
         >
+          {filteredProducts.length < 1 && (
+            <div className="flex w-full h-full justify-center mt-16  text-2xl">
+              No products
+            </div>
+          )}
           {filteredProducts
             ?.slice(
               (currentPage - 1) * productsPerPage,
@@ -189,29 +351,36 @@ const Products = () => {
             ))}
         </div>
       </div>
-      <div className="pagination flex w-full justify-center p-4 mt-5 gap-2">
-        <Button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          {'<'}
-        </Button>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+      {totalPages > 1 && (
+        <div className="pagination flex w-full justify-center p-4 mt-5 gap-2">
           <Button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={currentPage === page ? 'active' : ''}
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="font-semibold"
           >
-            {page}
+            {'<'}
           </Button>
-        ))}
-        <Button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          {'>'}
-        </Button>
-      </div>
+          {pagesToShow.map((page, index) => (
+            <Button
+              key={index}
+              onClick={() =>
+                handlePageChange(typeof page === 'number' ? page : currentPage)
+              }
+              className={currentPage === page ? 'active' : ''}
+              variant={currentPage === page ? 'default' : 'outline'}
+            >
+              {page}
+            </Button>
+          ))}
+          <Button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="font-semibold"
+          >
+            {'>'}
+          </Button>
+        </div>
+      )}
     </section>
   );
 };
