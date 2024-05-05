@@ -24,6 +24,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
       <Link
         href={`/store/${product._id}`}
         draggable={false}
+        aria-label="Product"
         className="overflow-hidden flex flex-col gap-2 justify-center w-full "
       >
         {product.images.length > 1 ? (
@@ -55,12 +56,17 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
       <div className="flex flex-col p-2 relative py-3 text-black select-none">
         <Link
           href={'/store?' + product.category.toLowerCase()}
+          aria-label="category"
           draggable={false}
         >
           <p className="text-sm opacity-90">{product.category}</p>
         </Link>
         <hr className="opacity-40" />
-        <Link href={'/store/' + product._id} draggable={false}>
+        <Link
+          href={'/store/' + product._id}
+          draggable={false}
+          aria-label="Product"
+        >
           <h2 className="text-black text-xl font-serif mt-1.5">
             {product.name}
           </h2>
@@ -72,6 +78,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
         <div className="flex gap-0.5 absolute right-5 bottom-4">
           <button
             className=" p-1"
+            aria-label="Add To Cart"
             onClick={() => {
               toast.success('Added to cart');
             }}
@@ -93,6 +100,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           </button>
           <button
             className=" p-1"
+            aria-label="WishList"
             onClick={() => {
               toast.success('Added to Wishlist');
             }}

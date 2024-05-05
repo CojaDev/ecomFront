@@ -26,6 +26,7 @@ const ProductCard = ({ product, storeData }: Store) => {
       <Link
         href={`/store/${product._id}`}
         draggable={false}
+        aria-label={product.name}
         className="overflow-hidden flex flex-col gap-2 justify-center w-full "
         onMouseEnter={() => {
           setIsImgHovered(1);
@@ -64,13 +65,18 @@ const ProductCard = ({ product, storeData }: Store) => {
         <Link
           href={`/store/${product.category.toLowerCase()}`}
           draggable={false}
+          aria-label="category"
         >
           <p className="text-sm opacity-90 dark:text-white">
             {product.category}
           </p>
         </Link>
         <hr className="opacity-50 dark:invert" />
-        <Link href={`/store/${product._id}`} draggable={false}>
+        <Link
+          href={`/store/${product._id}`}
+          draggable={false}
+          aria-label="product"
+        >
           <h2 className="text-black dark:text-white text-xl font-serif mt-1.5">
             {product.name}
           </h2>
@@ -81,6 +87,7 @@ const ProductCard = ({ product, storeData }: Store) => {
         <div className="flex gap-0.5 absolute right-5 bottom-4">
           <button
             className="p-1 dark:text-white"
+            aria-label="Cart"
             onClick={() => {
               toast.success('Added to cart');
             }}
@@ -102,6 +109,7 @@ const ProductCard = ({ product, storeData }: Store) => {
           </button>
           <button
             className="p-1 dark:invert"
+            aria-label="WishList"
             onClick={() => {
               toast.success('Added to Wishlist');
             }}

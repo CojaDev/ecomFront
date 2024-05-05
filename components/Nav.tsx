@@ -96,7 +96,13 @@ const Nav = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/store" legacyBehavior passHref draggable={false}>
+              <Link
+                href="/store"
+                legacyBehavior
+                passHref
+                draggable={false}
+                aria-label="Link"
+              >
                 <NavigationMenuTrigger className="relative">
                   Store
                 </NavigationMenuTrigger>
@@ -110,6 +116,7 @@ const Nav = () => {
                         href={'/store?' + category.name.toLowerCase()}
                         draggable={false}
                         className="w-full  flex  overflow-hidden"
+                        aria-label="Category"
                       >
                         <NavigationMenuLink
                           className={navigationMenuTriggerStyle()}
@@ -122,21 +129,39 @@ const Nav = () => {
               )}
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/" legacyBehavior passHref draggable={false}>
+              <Link
+                href="/"
+                legacyBehavior
+                passHref
+                draggable={false}
+                aria-label="Link"
+              >
                 <h2 className="font-medium text-4xl mt-0.5 min-w-[100px] text-center cursor-pointer mx-10 font-serif select-none">
                   {storeData && storeData.name + '.'}
                 </h2>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/about" legacyBehavior passHref draggable={false}>
+              <Link
+                href="/about"
+                legacyBehavior
+                passHref
+                draggable={false}
+                aria-label="Link"
+              >
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   About
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/contact" legacyBehavior passHref draggable={false}>
+              <Link
+                href="/contact"
+                legacyBehavior
+                passHref
+                draggable={false}
+                aria-label="Link"
+              >
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Contact
                 </NavigationMenuLink>
@@ -147,6 +172,7 @@ const Nav = () => {
 
         <Button
           variant={'outline'}
+          aria-label="Cart"
           className="px-3 flex gap-2 font-serif text-xl"
         >
           <svg
@@ -218,7 +244,7 @@ const Nav = () => {
               <NavigationMenuMobile>
                 <NavigationMenuListMobile>
                   <NavigationMenuItemMobile>
-                    <Link href="/" legacyBehavior passHref>
+                    <Link href="/" legacyBehavior passHref aria-label="Link">
                       <NavigationMenuLinkMobile
                         className={navigationMenuTriggerStyleMobile()}
                       >
@@ -227,7 +253,12 @@ const Nav = () => {
                     </Link>
                   </NavigationMenuItemMobile>
                   <NavigationMenuItemMobile>
-                    <Link href="/store" legacyBehavior passHref>
+                    <Link
+                      href="/store"
+                      legacyBehavior
+                      passHref
+                      aria-label="Link"
+                    >
                       <NavigationMenuLinkMobile
                         className={navigationMenuTriggerStyleMobile()}
                       >
@@ -236,7 +267,12 @@ const Nav = () => {
                     </Link>
                   </NavigationMenuItemMobile>
                   <NavigationMenuItemMobile>
-                    <Link href="/about" legacyBehavior passHref>
+                    <Link
+                      href="/about"
+                      legacyBehavior
+                      passHref
+                      aria-label="Link"
+                    >
                       <NavigationMenuLinkMobile
                         className={navigationMenuTriggerStyleMobile()}
                       >
@@ -245,7 +281,12 @@ const Nav = () => {
                     </Link>
                   </NavigationMenuItemMobile>
                   <NavigationMenuItemMobile>
-                    <Link href="/contact" legacyBehavior passHref>
+                    <Link
+                      href="/contact"
+                      legacyBehavior
+                      passHref
+                      aria-label="Link"
+                    >
                       <NavigationMenuLinkMobile
                         className={navigationMenuTriggerStyleMobile()}
                       >

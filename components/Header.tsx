@@ -65,7 +65,13 @@ const HeaderHome: React.FC = () => {
             className="select-none absolute bottom-7 dots -right-16 z-20 dark:invert"
           />
         </div>
-        <Link href="/store" legacyBehavior passHref draggable={false}>
+        <Link
+          href="/store"
+          aria-label="Explore"
+          legacyBehavior
+          passHref
+          draggable={false}
+        >
           <Button
             className="md:w-[30%] w-[60%] rounded-none z-20 select-none ml-0.5 text-xl  border-0  !py-5 font-serif"
             variant={'outline'}
