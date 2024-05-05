@@ -19,8 +19,8 @@ const CustomSlider = ({ min, max, step, onChange, currency }: any) => {
   };
 
   return (
-    <div className="relative flex flex-col gap-3">
-      <div className="absolute flex justify-center items-center top-0 left-0 h-[0.6rem] w-full dark:bg-white bg-[rgb(18,15,13)] rounded-full z-0 pointer-events-none" />
+    <div className="relative flex flex-col gap-3 lg:w-full sm:w-2/4 w-full">
+      <div className="absolute flex justify-center items-center top-0 left-0 h-[0.6rem] w-full  dark:bg-white bg-[rgb(18,15,13)] rounded-full z-0 pointer-events-none" />
       <input
         type="range"
         min={min}

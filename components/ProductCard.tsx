@@ -60,25 +60,27 @@ const ProductCard = ({ product, storeData }: Store) => {
           />
         )}
       </Link>
-      <div className="flex flex-col p-2 relative py-3 text-black dark:text-white select-none">
+      <div className="flex flex-col p-2 relative py-3 text-black  select-none">
         <Link
           href={`/store/${product.category.toLowerCase()}`}
           draggable={false}
         >
-          <p className="text-sm opacity-90">{product.category}</p>
+          <p className="text-sm opacity-90 dark:text-white">
+            {product.category}
+          </p>
         </Link>
-        <hr className="opacity-40" />
+        <hr className="opacity-50 dark:invert" />
         <Link href={`/store/${product._id}`} draggable={false}>
           <h2 className="text-black dark:text-white text-xl font-serif mt-1.5">
             {product.name}
           </h2>
         </Link>
-        <h3 className="text-xl font-medium font-serif">
+        <h3 className="text-xl font-medium font-serif dark:text-white">
           {product.price} {storeData.currency}
         </h3>
         <div className="flex gap-0.5 absolute right-5 bottom-4">
           <button
-            className="p-1"
+            className="p-1 dark:text-white"
             onClick={() => {
               toast.success('Added to cart');
             }}
@@ -99,7 +101,7 @@ const ProductCard = ({ product, storeData }: Store) => {
             </svg>
           </button>
           <button
-            className="p-1"
+            className="p-1 dark:invert"
             onClick={() => {
               toast.success('Added to Wishlist');
             }}

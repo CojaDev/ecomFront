@@ -81,12 +81,12 @@ const Nav = () => {
     fetchData();
   }, []);
 
-  const isDesktop = useMediaQuery('(max-width: 768px)');
+  const isDesktop = useMediaQuery('(max-width: 1024px)');
   return !isDesktop ? (
-    <nav className="flex w-full justify-between px-6  top-0   min-h-16 ">
-      <div className="flex items-center gap-2 justify-between w-full ">
+    <nav className=" w-full justify-between px-6 py-4 top-0   min-h-16 lg:flex hidden">
+      <div className="relative flex items-center gap-2 justify-between w-full  ">
         <ModeToggle />
-        <NavigationMenu className="px-2 py-4  w-full  justify-between md:flex hidden select-none">
+        <NavigationMenu className="absolute left-[50%] -translate-x-2/4 px-2 py-4  w-full  justify-between  select-none">
           <NavigationMenuList className="gap-5">
             <NavigationMenuItem>
               <Link href="/" legacyBehavior passHref draggable={false}>
@@ -168,7 +168,7 @@ const Nav = () => {
       </div>
     </nav>
   ) : (
-    <nav className="  bg-white dark:bg-[#0C0A09] px-5 py-4 flex w-full min-h-16  justify-between md:hidden items-center">
+    <nav className="  bg-white dark:bg-[#0C0A09] px-5 py-4 flex w-full min-h-16  justify-between lg:hidden items-center">
       <h2 className="font-semibold text-2xl mt-1">
         {storeData && storeData.name}.
       </h2>

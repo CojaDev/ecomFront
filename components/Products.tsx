@@ -248,7 +248,7 @@ const Products = () => {
   return (
     <section className="w-full flex flex-col">
       <div
-        className="filter flex w-full justify-between items-center md:pl-0 md:pr-4 px-4 py-5 mx-auto"
+        className="filter flex w-full justify-between items-center md:pl-2 md:pr-3 px-4 py-5 mx-auto"
         style={{
           maxWidth: 316 * productsPerRow + 'px',
         }}
@@ -271,9 +271,9 @@ const Products = () => {
           Price: {priceOrder === 'asc' ? 'Low to High' : 'High to Low'}
         </button>
       </div>
-      <div className="content flex md:flex-row flex-col w-full gap-2 relative justify-center">
+      <div className="content flex lg:flex-row flex-col w-full gap-2 relative justify-center">
         <div
-          className="categories px-2 flex flex-col gap-2 md:absolute relative left-0  md:w-[15%] w-full"
+          className="categories px-2 flex flex-col gap-2 lg:absolute relative left-0  lg:w-[15%] w-full"
           ref={productsRef}
         >
           <div className="PriceFilter p-2 flex flex-col gap-2">
@@ -325,7 +325,7 @@ const Products = () => {
         </div>
 
         <div
-          className={`products flex flex-wrap mx-auto gap-4 md:justify-start justify-center`}
+          className={`products flex flex-wrap mx-auto gap-4 lg:justify-start justify-center`}
           style={{
             maxWidth: 312 * productsPerRow + 'px',
 
@@ -333,7 +333,7 @@ const Products = () => {
           }}
         >
           {filteredProducts.length < 1 && (
-            <div className="flex w-full h-full justify-center mt-16  text-2xl">
+            <div className="flex w-full h-full justify-center mt-24  text-2xl">
               No products
             </div>
           )}

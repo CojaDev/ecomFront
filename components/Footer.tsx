@@ -20,6 +20,9 @@ const Footer = () => {
     description: string;
     currency: string;
     address: string;
+    email: string;
+    faq: { question: string; answer: string }[];
+    specialPage: { name: string; text: string }[];
     ig: string;
     fb: string;
     yt: string;
@@ -65,9 +68,7 @@ const Footer = () => {
         <div className="flex flex-col gap-2 flex-1">
           <h2 className="font-serif text-3xl mb-2">Contact Info</h2>
           <p className="opacity-60">{storeData.address}</p>
-          <p className="opacity-60">
-            Email: {storeData.name.toLowerCase()}@gmail.com
-          </p>
+          <p className="opacity-60">{storeData.email}</p>
           {storeData.ig && (
             <div className="flex gap-1">
               <p className="opacity-60">Instagram: </p>
@@ -149,12 +150,16 @@ const Footer = () => {
 
         <div className="flex flex-col gap-2 flex-1">
           <h2 className="font-serif text-3xl mb-2">Get Help</h2>
-          <p className="opacity-60 cursor-pointer ">Contact Us</p>
-          <p className="opacity-60 cursor-pointer">Delivery Information</p>
-          <p className="opacity-60 cursor-pointer">Sale Terms & Conditions</p>
-          <p className="opacity-60 cursor-pointer">Privacy Notice</p>
-          <p className="opacity-60 cursor-pointer">Shopping FAQs</p>
-          <p className="opacity-60 cursor-pointer">Returns & Refunds</p>
+          {storeData.specialPage.length > 1 &&
+            storeData.specialPage.map((page, index: number) => (
+              <Link
+                key={index}
+                className="opacity-70"
+                href={'/' + page.name.replace(' ', '-').toLowerCase()}
+              >
+                {page.name}
+              </Link>
+            ))}
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
@@ -173,31 +178,15 @@ const Footer = () => {
         <div className="flex flex-col gap-1.5 flex-1">
           <h2 className="font-serif text-3xl mb-0">FAQ.</h2>
           <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>How long does shipping take?</AccordionTrigger>
-              <AccordionContent>
-                Standard shipping takes 3 business days. Delivery times vary
-                based on your location and selected shipping method.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>
-                Do you offer international shipping?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes, we offer international shipping to most countries. Shipping
-                rates and delivery times may vary depending on the destination.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>
-                What payment methods do you accept?
-              </AccordionTrigger>
-              <AccordionContent>
-                We accept Stripe payments for online transactions and offer
-                payment on delivery for added convenience.
-              </AccordionContent>
-            </AccordionItem>
+            {storeData.faq.length > 1 &&
+              storeData.faq.map((question, index: number) => (
+                <AccordionItem value={`item-1${index}`}>
+                  <AccordionTrigger key={index}>
+                    {question.question}
+                  </AccordionTrigger>
+                  <AccordionContent>{question.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
           </Accordion>
         </div>
       </div>
