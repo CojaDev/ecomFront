@@ -58,7 +58,7 @@ const Footer = () => {
       /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
     return urlPattern.test(url);
   };
-
+  const domain = storeData && new URL(storeData.customLink).hostname;
   if (!storeData) {
     return null;
   }
@@ -142,7 +142,15 @@ const Footer = () => {
                   href={storeData.customLink}
                   className="p-4 bg-gray-500/30 rounded-full opacity-70 hover:opacity-100 transition-all"
                 >
-                  <FaLink className="w-5 h-5" />
+                  <img
+                    src={`https://${domain}/favicon.ico`}
+                    alt="fav"
+                    className={`w-6 h-6 rounded-lg grayscale ${
+                      domain?.includes('github') ? 'invert' : ''
+                    }  ${
+                      domain?.includes('youtube') ? 'invert' : ''
+                    } brightness-200`}
+                  />
                 </a>
               )}
           </div>
@@ -155,7 +163,7 @@ const Footer = () => {
               <Link
                 key={index}
                 className="opacity-70"
-                href={'/' + page.name.replace(' ', '-').toLowerCase()}
+                href={'/help/' + page.name.replace(/\s+/g, '-').toLowerCase()}
               >
                 {page.name}
               </Link>
@@ -180,10 +188,8 @@ const Footer = () => {
           <Accordion type="single" collapsible>
             {storeData.faq.length > 1 &&
               storeData.faq.map((question, index: number) => (
-                <AccordionItem value={`item-1${index}`}>
-                  <AccordionTrigger key={index}>
-                    {question.question}
-                  </AccordionTrigger>
+                <AccordionItem key={index} value={`item-1${index}`}>
+                  <AccordionTrigger>{question.question}</AccordionTrigger>
                   <AccordionContent>{question.answer}</AccordionContent>
                 </AccordionItem>
               ))}

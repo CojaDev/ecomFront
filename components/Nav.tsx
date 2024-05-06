@@ -113,7 +113,7 @@ const Nav = () => {
                     categoryData?.map((category: any, index: number) => (
                       <Link
                         key={index}
-                        href={'/store?' + category.name.toLowerCase()}
+                        href={'/store?cat=' + category.name.toLowerCase()}
                         draggable={false}
                         className="w-full  flex  overflow-hidden"
                         aria-label="Category"

@@ -37,7 +37,7 @@ const CategoryTabs = () => {
           categoryData?.map((category: any, index: number) => (
             <Link
               key={index}
-              href={'/store?' + category.name.toLowerCase()}
+              href={'/store?cat=' + category.name.toLowerCase()}
               draggable={false}
               className="flex-1 relative overflow-hidden"
             >

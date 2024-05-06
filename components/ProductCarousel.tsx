@@ -55,7 +55,7 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
       </Link>
       <div className="flex flex-col p-2 relative py-3 text-black select-none">
         <Link
-          href={'/store?' + product.category.toLowerCase()}
+          href={'/store?cat=' + product.category.toLowerCase()}
           aria-label="category"
           draggable={false}
         >

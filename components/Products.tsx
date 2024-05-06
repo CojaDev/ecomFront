@@ -9,7 +9,7 @@ import Select from 'react-select';
 import ProductCard from './ProductCard';
 import { Slider } from '@/components/ui/slider';
 import CustomSlider from './CustomSlider';
-
+import { useSearchParams } from 'next/navigation';
 interface ProductData {
   name: string;
   category: string;
@@ -41,6 +41,8 @@ const Products = () => {
   const [maxPrice, setMaxPrice] = useState<number>(0);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
   const productsRef = useRef<HTMLDivElement>(null);
+  const searchParams = useSearchParams();
+  const category = searchParams.get('cat');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,13 +60,17 @@ const Products = () => {
         setMaxPrice(maxPriceValue);
         setMinPrice(minPriceValue);
         setPriceRange([minPriceValue, maxPriceValue]);
+
+        if (category !== '') {
+          setSelectedCategory(category);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [category]);
 
   useEffect(() => {
     filterProducts();
@@ -83,7 +89,7 @@ const Products = () => {
     let filtered = [...productsData];
     if (selectedCategory) {
       filtered = filtered.filter(
-        (product) => product.category === selectedCategory
+        (product) => product.category.toLowerCase() === selectedCategory
       );
     }
     if (selectedSizes.length > 0) {
@@ -107,7 +113,7 @@ const Products = () => {
   };
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
+    setSelectedCategory(category.toLowerCase());
   };
 
   const handlePriceOrderChange = () => {

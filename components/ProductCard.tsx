@@ -63,7 +63,7 @@ const ProductCard = ({ product, storeData }: Store) => {
       </Link>
       <div className="flex flex-col p-2 relative py-3 text-black  select-none">
         <Link
-          href={`/store/${product.category.toLowerCase()}`}
+          href={`/store?cat=${product.category.toLowerCase()}`}
           draggable={false}
           aria-label="category"
         >
