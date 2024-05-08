@@ -1,13 +1,15 @@
 import HeaderStore from '@/components/HeaderStore';
 import Layout from '@/components/Layout';
 import Products from '@/components/Products';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const Home = () => {
   return (
     <Layout>
       <HeaderStore title="store" />
-      <Products />
+      <Suspense>
+        <Products />
+      </Suspense>
     </Layout>
   );
 };
