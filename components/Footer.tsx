@@ -146,9 +146,9 @@ const Footer = () => {
                     src={`https://${domain}/favicon.ico`}
                     alt="fav"
                     className={`w-6 h-6 rounded-lg grayscale ${
-                      domain?.includes('github') ? 'invert' : ''
+                      domain?.includes('github') ? 'invert dark:invert-0' : ''
                     }  ${
-                      domain?.includes('youtube') ? 'invert' : ''
+                      domain?.includes('youtube') ? 'invert dark:invert-0' : ''
                     } brightness-200`}
                   />
                 </a>
@@ -187,7 +187,7 @@ const Footer = () => {
           <h2 className="font-serif text-3xl mb-0">FAQ.</h2>
           <Accordion type="single" collapsible>
             {storeData.faq.length > 1 &&
-              storeData.faq.map((question, index: number) => (
+              storeData.faq.slice(0, 3).map((question, index: number) => (
                 <AccordionItem key={index} value={`item-1${index}`}>
                   <AccordionTrigger>{question.question}</AccordionTrigger>
                   <AccordionContent>{question.answer}</AccordionContent>

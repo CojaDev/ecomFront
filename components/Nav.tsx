@@ -156,7 +156,7 @@ const Nav = () => {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Link
-                href="/contact"
+                href="/help"
                 legacyBehavior
                 passHref
                 draggable={false}
@@ -282,7 +282,7 @@ const Nav = () => {
                   </NavigationMenuItemMobile>
                   <NavigationMenuItemMobile>
                     <Link
-                      href="/contact"
+                      href="/help"
                       legacyBehavior
                       passHref
                       aria-label="Link"

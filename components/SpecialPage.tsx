@@ -18,6 +18,14 @@ const SpecialPage = ({ content }: ContentProps) => {
               <p>{paragraph}</p>
             </div>
           );
+        } else if (section.includes('-')) {
+          const [heading, paragraph] = section.split(':');
+          return (
+            <div key={index} className="mb-6">
+              <h2 className="text-xl font-semibold mb-2">{heading}</h2>
+              <p>{paragraph}</p>
+            </div>
+          );
         } else {
           return (
             <div key={index} className="mb-6">
