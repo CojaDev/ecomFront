@@ -1,4 +1,3 @@
-'use client';
 import HeaderStore from '@/components/HeaderStore';
 import HelpPage from '@/components/HelpPage';
 import Layout from '@/components/Layout';

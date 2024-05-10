@@ -10,31 +10,33 @@ import {
 } from '@/components/ui/carousel';
 import ProductCarousel from './ProductCarousel';
 
-interface title {
+interface Title {
   title: string;
 }
 
-const ProductList = ({ title }: title) => {
-  interface productData {
+const ProductList = ({ title }: Title) => {
+  interface ProductData {
     name: string;
     category: string;
     price: string;
-    images: string;
+    images: string[];
     index: number;
     title: string;
+    _id: string;
   }
 
   interface StoreData {
     currency: string;
   }
-  const [productsData, setProductsData] = useState<productData | null>(null);
+
+  const [productsData, setProductsData] = useState<ProductData[] | null>(null);
   const [storeData, setStoreData] = useState<StoreData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const categories = await getProducts();
+      const products = await getProducts();
       const store = await getStore();
-      setProductsData(categories);
+      setProductsData(products);
       setStoreData(store);
     };
 
@@ -42,8 +44,25 @@ const ProductList = ({ title }: title) => {
   }, []);
 
   if (!storeData || !productsData) {
-    return null; // Return null if either storeData or productsData is not available
+    return null;
   }
+
+  let productsToDisplay = Object.values(productsData);
+
+  if (title === 'Featured') {
+    productsToDisplay = productsToDisplay.slice(0, 8);
+  } else if (title === 'NEW ARRIVALS') {
+    productsToDisplay = productsToDisplay.slice(-8).reverse();
+  } else {
+    const randomIndices = new Set();
+    while (randomIndices.size < 8) {
+      randomIndices.add(Math.floor(Math.random() * productsToDisplay.length));
+    }
+    productsToDisplay = Array.from(randomIndices).map(
+      (index: any) => productsToDisplay[index]
+    );
+  }
+
   return (
     <section className="flex flex-col w-full gap-6 p-10 justify-center items-center ">
       <div className="w-screen flex flex-col gap-1.5 justify-center items-center">
@@ -52,37 +71,15 @@ const ProductList = ({ title }: title) => {
       </div>
       <div className="flex md:flex-row flex-col w-full max-w-7xl ">
         <Carousel className="">
-          {title === 'Featured' ? (
-            <CarouselContent className="lg:p-2 p-1 gap-2 lg:m-4 m-0">
-              {productsData &&
-                storeData &&
-                Object.values(productsData)
-                  .slice(0, 8)
-                  .map((product: any) => (
-                    <ProductCarousel
-                      key={product._id}
-                      product={product}
-                      currency={storeData?.currency}
-                    />
-                  ))}
-            </CarouselContent>
-          ) : (
-            <CarouselContent className="lg:p-2 p-1 gap-2 lg:m-4 m-0">
-              {productsData &&
-                storeData &&
-                Object.values(productsData)
-                  .slice(-8)
-                  .reverse()
-                  .map((product: any) => (
-                    <ProductCarousel
-                      key={product._id}
-                      product={product}
-                      currency={storeData?.currency}
-                    />
-                  ))}
-            </CarouselContent>
-          )}
-
+          <CarouselContent className="lg:p-2 p-1 gap-2 lg:m-4 m-0">
+            {productsToDisplay.map((product) => (
+              <ProductCarousel
+                key={product._id}
+                product={product}
+                currency={storeData.currency}
+              />
+            ))}
+          </CarouselContent>
           <CarouselPrevious className=" border-2 dark:border-white dark:text-white border-black hidden lg:flex " />
           <CarouselNext className=" border-2 dark:border-white dark:text-white border-black/90 hidden lg:flex  " />
         </Carousel>

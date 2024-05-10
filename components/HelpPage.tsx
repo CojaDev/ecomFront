@@ -133,13 +133,17 @@ const HelpPage = () => {
           Frequently asked questions
         </h2>
         <div className="w-full h-0.5 bg-[#120F0D] dark:bg-white mt-2"></div>
-        <Accordion type="single" collapsible>
+        <Accordion className="scale-10" type="single" collapsible>
           {storeData &&
             storeData.faq.length > 1 &&
             storeData.faq.map((question, index: number) => (
               <AccordionItem key={index} value={`item-1${index}`}>
-                <AccordionTrigger>{question.question}</AccordionTrigger>
-                <AccordionContent>{question.answer}</AccordionContent>
+                <AccordionTrigger className="text-lg">
+                  {question.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-lg">
+                  {question.answer}
+                </AccordionContent>
               </AccordionItem>
             ))}
         </Accordion>

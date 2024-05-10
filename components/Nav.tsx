@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-
+import useCart from '@/lib/useCart';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -49,7 +49,7 @@ const Nav = () => {
     yt?: string;
     customLink?: string;
   }
-
+  const cart = useCart();
   const [storeData, setStoreData] = useState<StoreData | null>(null);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const Nav = () => {
 
   const isDesktop = useMediaQuery('(max-width: 1024px)');
   return !isDesktop ? (
-    <nav className=" w-full justify-between px-6 py-4 top-0   min-h-16 lg:flex hidden">
+    <nav className=" w-full justify-between px-6 py-4 top-0   min-h-16 lg:flex hidden shadow-sm  shadow-black dark:shadow-white">
       <div className="relative flex items-center gap-2 justify-between w-full  ">
         <ModeToggle />
         <NavigationMenu className="absolute left-[50%] -translate-x-2/4 px-2 py-4  w-full  justify-between  select-none">
@@ -169,11 +169,52 @@ const Nav = () => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-
+        <Link
+          href="/cart"
+          legacyBehavior
+          passHref
+          draggable={false}
+          aria-label="Link"
+        >
+          <Button
+            variant={'outline'}
+            aria-label="Cart"
+            className="px-3 flex gap-2 font-serif text-xl"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+              />
+            </svg>
+            cart ({cart.cartItems.length})
+          </Button>
+        </Link>
+      </div>
+    </nav>
+  ) : (
+    <nav className="  bg-white dark:bg-[#0C0A09] px-5 py-4 flex w-full min-h-16  justify-between lg:hidden items-center">
+      <h2 className="font-semibold text-2xl mt-1">
+        {storeData && storeData.name}.
+      </h2>
+      <Link
+        href="/cart"
+        legacyBehavior
+        passHref
+        draggable={false}
+        aria-label="Link"
+      >
         <Button
           variant={'outline'}
-          aria-label="Cart"
-          className="px-3 flex gap-2 font-serif text-xl"
+          className=" ml-auto mr-2 text-xl font-serif px-2 flex gap-1 items-center justify-center"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -189,32 +230,9 @@ const Nav = () => {
               d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
             />
           </svg>
-          cart (0)
+          cart ({cart.cartItems.length})
         </Button>
-      </div>
-    </nav>
-  ) : (
-    <nav className="  bg-white dark:bg-[#0C0A09] px-5 py-4 flex w-full min-h-16  justify-between lg:hidden items-center">
-      <h2 className="font-semibold text-2xl mt-1">
-        {storeData && storeData.name}.
-      </h2>
-
-      <Button variant={'outline'} className=" ml-auto mr-2 px-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-          />
-        </svg>
-      </Button>
+      </Link>
 
       <div className="flex gap-3">
         <Drawer direction="top">

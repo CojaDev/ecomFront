@@ -1,5 +1,6 @@
 'use client';
 import Layout from '@/components/Layout';
+import ProductList from '@/components/ProductList';
 import ProductPage from '@/components/ProductPage';
 import { Button } from '@/components/ui/button';
 import { getProducts, getStore } from '@/lib/action';
@@ -15,6 +16,9 @@ interface ProductData {
   index: number;
   title: string;
   description: string;
+  colors: string[];
+  sizes: string[];
+  quantity: string;
   _id: string;
 }
 interface StoreData {
@@ -29,7 +33,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true); // New loading state
   const pathname = usePathname();
   const productId = pathname.split('/')[2];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +47,9 @@ const Home = () => {
       }
     };
     fetchData();
+  }, []);
 
+  useEffect(() => {
     if (productId && products.length > 0) {
       const foundProduct = products.find(
         (product: ProductData) => product._id === productId
@@ -75,7 +80,9 @@ const Home = () => {
     return (
       <Layout>
         <div className="w-full h-[85vh] flex flex-col gap-2 justify-center items-center">
-          <h2 className="text-8xl font-serif">404 Product not found</h2>
+          <h2 className="md:text-8xl text-6xl text-center font-serif">
+            404 Product not found
+          </h2>
           <Link href="/store">
             <Button className="text-lg" size={'lg'}>
               Go back
@@ -88,7 +95,10 @@ const Home = () => {
   return (
     <Layout>
       {productData && storeData && (
-        <ProductPage product={productData} currency={storeData.currency} />
+        <>
+          <ProductPage product={productData} currency={storeData.currency} />
+          <ProductList title="You Might Also Like" />
+        </>
       )}
     </Layout>
   );
