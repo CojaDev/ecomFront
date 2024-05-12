@@ -1,5 +1,6 @@
 'use client';
 import Layout from '@/components/Layout';
+import ProductList from '@/components/ProductList';
 
 import useCart from '@/lib/useCart';
 
@@ -23,11 +24,13 @@ const Cart = () => {
     <Layout>
       <section className="flex gap-20 min-h-[75vh] py-16 px-10 max-lg:flex-col max-sm:px-3">
         <div className="w-2/3 max-lg:w-full">
-          <p className="text-3xl font-serif">Shopping Cart</p>
+          <p className="text-4xl font-serif">Shopping Cart</p>
           <hr className="my-6" />
 
           {cart.cartItems.length === 0 ? (
-            <p className="text-body-bold">No item in cart</p>
+            <p className="text-body-bold text-2xl font-serif">
+              No item in cart
+            </p>
           ) : (
             <div>
               {cart.cartItems.map((cartItem) => (
@@ -99,6 +102,7 @@ const Cart = () => {
           </button>
         </div>
       </section>
+      <ProductList title="You Might Also Like" />
     </Layout>
   );
 };
