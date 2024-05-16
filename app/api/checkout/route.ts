@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
-  typescript: true,
-});
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -23,9 +19,9 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Not enough data to checkout', { status: 400 });
     }
 
-    const stripe = require('stripe')(
-      'sk_test_51PGMsUP3DUFcVIifUav2zjT5Ms0kxSuqX1uchjC5x5ZNKIVuM4D1DY2JxYsyfy2nXYELaHw5xSRRbjmkQNQ2Dz0M00iBRt4dNS'
-    );
+    const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
+      typescript: true,
+    });
     const shippingRate = await stripe.shippingRates.create({
       display_name: 'Ground shipping',
       type: 'fixed_amount',
