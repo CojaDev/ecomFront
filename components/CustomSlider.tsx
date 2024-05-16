@@ -40,14 +40,25 @@ const CustomSlider = ({ min, max, step, onChange, currency }: any) => {
         className="absolute w-full z-10"
       />
 
-      <div className="flex  justify-between mt-5">
+      <div className="flex justify-between mt-5">
         <span>
-          Min: {values[0]} {currency}{' '}
+          Min:{' '}
+          {values[0].toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2,
+          })}{' '}
+          {currency}{' '}
         </span>
         <span>
-          Max: {values[1]} {currency}{' '}
+          Max:{' '}
+          {values[1].toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}{' '}
+          {currency}{' '}
         </span>
       </div>
+
       <Button
         onClick={handleFilterClick}
         className="rounded-none w-2/5"

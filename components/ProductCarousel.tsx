@@ -72,7 +72,11 @@ const ProductCarousel = ({ product, currency }: StoreData) => {
           </h2>
         </Link>
         <h3 className="text-xl font-medium font-serif">
-          {product.price} {currency}
+          {parseInt(product.price).toLocaleString(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}{' '}
+          {currency}
         </h3>
 
         <div className="flex gap-0.5 absolute right-5 bottom-4">

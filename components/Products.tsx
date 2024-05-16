@@ -279,7 +279,7 @@ const Products = () => {
       </div>
       <div className="content flex lg:flex-row flex-col w-full gap-2 relative justify-center">
         <div
-          className="categories px-2 flex flex-col gap-2 lg:absolute relative left-0  lg:w-[15%] w-full"
+          className="categories px-2 flex flex-col gap-2 lg:absolute relative left-0  lg:w-[17%] w-full"
           ref={productsRef}
         >
           <div className="PriceFilter p-2 flex flex-col gap-2">

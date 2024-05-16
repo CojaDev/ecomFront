@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { toast } from 'react-hot-toast';
 import { persist, createJSONStorage } from 'zustand/middleware';
+
 interface ProductType {
   name: string;
   category: string;
@@ -42,7 +43,8 @@ const useCart = create(
         );
 
         if (isExisting) {
-          return toast('Item already in cart');
+          toast.error('Item is already in cart');
+          throw new Error('Item Already Exists');
         }
 
         set({ cartItems: [...currentItems, { item, quantity, color, size }] });
