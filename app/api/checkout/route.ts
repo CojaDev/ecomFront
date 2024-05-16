@@ -1,62 +1,8 @@
-import Orders from '../../models/Orders';
-import { mongooseConnect } from '../../../lib/mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 export const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
   typescript: true,
 });
-
-const updateIndexes = async () => {
-  try {
-    const products = await Orders.find().sort({ _id: 1 });
-    for (let i = 0; i < products.length; i++) {
-      products[i].index = i;
-      await products[i].save();
-    }
-  } catch (error) {
-    console.error('Error updating indexes:', error);
-  }
-};
-
-//updateIndexes();
-
-export async function PUT(request: any) {
-  try {
-    await mongooseConnect();
-    const {
-      name,
-      description,
-      currency,
-      address,
-      admins,
-      ig,
-      fb,
-      yt,
-      customLink,
-    } = await request.json();
-    const newOrder = new Orders({
-      name,
-      description,
-      currency,
-      address,
-      admins,
-      ig,
-      fb,
-      yt,
-      customLink,
-    });
-    await newOrder.save();
-
-    return NextResponse.json({ message: 'Order created successfully' });
-  } catch (error) {
-    console.error('Error creating Order:', error);
-    return NextResponse.json(
-      { message: 'Failed to create Order' },
-      { status: 500 }
-    );
-  }
-}
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
