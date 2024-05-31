@@ -8,16 +8,16 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
 });
 
 export async function POST(req: NextRequest) {
-  const buf = await req.arrayBuffer();
-  const sig = req.headers.get('stripe-signature') as string;
+  const rawBody = await req.text();
+  const signature = req.headers.get('Stripe-Signature') as string;
 
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
-      Buffer.from(buf),
-      sig,
-      process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET!
+      rawBody,
+      signature,
+      process.env.STRIPE_WEBHOOK_SECRET!
     );
   } catch (err: any) {
     console.error('Webhook signature verification failed:', err.message);
