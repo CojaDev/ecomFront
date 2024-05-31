@@ -3,7 +3,7 @@ import Layout from '@/components/Layout';
 import ProductList from '@/components/ProductList';
 import useCart from '@/lib/useCart';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import HeaderStore from '@/components/HeaderStore';
 
 import { useSearchParams } from 'next/navigation';
@@ -30,18 +30,22 @@ const SuccessPage = () => {
 
   if (!cart) {
     return (
-      <Layout>
-        <div className="w-full h-[85vh] flex justify-center items-center">
-          <h2 className="text-8xl font-serif">Loading...</h2>
-        </div>
-      </Layout>
+      <Suspense>
+        <Layout>
+          <div className="w-full h-[85vh] flex justify-center items-center">
+            <h2 className="text-8xl font-serif">Loading...</h2>
+          </div>
+        </Layout>
+      </Suspense>
     );
   }
   return (
-    <Layout>
-      <HeaderStore title="Payment Success" />
-      <ProductList title="You Might Also Like" />
-    </Layout>
+    <Suspense>
+      <Layout>
+        <HeaderStore title="Payment Success" />
+        <ProductList title="You Might Also Like" />
+      </Layout>
+    </Suspense>
   );
 };
 
