@@ -69,7 +69,7 @@ const FeaturedProduct = () => {
           </h2>
           <p className="text-lg">{randomSlogan}</p>
           <Link
-            href={`/store?${featuredProduct._id}`}
+            href={`/store/${featuredProduct._id}`}
             legacyBehavior
             passHref
             draggable={false}
@@ -94,7 +94,7 @@ const FeaturedProduct = () => {
         </div>
         <div className="relative w-80 h-80 cursor-pointer  rounded-[40%] overflow-hidden">
           <Link
-            href={`/store?${featuredProduct._id}`}
+            href={`/store/${featuredProduct._id}`}
             legacyBehavior
             passHref
             draggable={false}

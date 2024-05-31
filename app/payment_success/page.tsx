@@ -15,14 +15,6 @@ const HandleSearchParams = ({ cart }: any) => {
     if (session_id) {
       console.log(session_id);
       cart.clearCart();
-      axios
-        .post('/api/orders', { session_id })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error('Error completing order:', error);
-        });
     }
   }, [session_id]);
 

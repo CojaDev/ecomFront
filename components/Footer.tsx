@@ -89,7 +89,7 @@ const Footer = () => {
             <h2 className="font-serif text-3xl mt-5">Follow Us On</h2>
           )}
 
-          <div className="socials flex gap-1 mt-2">
+          <div className="socials flex gap-1.5 mt-2">
             {storeData.ig &&
               storeData.ig !== '' &&
               isValidUrl(storeData.ig) && (
@@ -98,7 +98,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   draggable={false}
                   href={storeData.ig}
-                  className="p-4 bg-gray-500/30 rounded-full opacity-70 hover:opacity-100 transition-all"
+                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
                   <FaInstagram className="w-5 h-5" />
                 </a>
@@ -112,7 +112,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   draggable={false}
                   href={storeData.yt}
-                  className="p-4 bg-gray-500/30 rounded-full opacity-70 hover:opacity-100 transition-all"
+                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
                   <IoLogoYoutube className="w-5 h-5" />
                 </a>
@@ -126,7 +126,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   draggable={false}
                   href={storeData.fb}
-                  className="p-4 bg-gray-500/30 rounded-full opacity-70 hover:opacity-100 transition-all"
+                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
                   <FaFacebookSquare className="w-5 h-5" />
                 </a>
@@ -140,7 +140,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   draggable={false}
                   href={storeData.customLink}
-                  className="p-4 bg-gray-500/30 rounded-full opacity-70 hover:opacity-100 transition-all"
+                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
                   <img
                     src={`https://${domain}/favicon.ico`}
