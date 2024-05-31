@@ -13,12 +13,11 @@ const HandleSearchParams = ({ cart }: any) => {
 
   useEffect(() => {
     if (session_id) {
-      console.log(session_id);
       cart.clearCart();
     }
   }, [session_id]);
 
-  return null; // This component does not need to render anything
+  return null;
 };
 
 const SuccessPage = () => {

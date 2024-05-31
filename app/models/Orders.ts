@@ -47,18 +47,23 @@ const ordersSchema = new Schema({
 
   products: [
     {
-      productName: {
+      product: {
         type: String,
         require: true,
         trim: true,
       },
-      price: {
-        type: Number,
+      color: {
+        type: String,
         require: true,
         trim: true,
       },
-      expenses: {
-        type: Number,
+      size: {
+        type: String,
+        require: true,
+        trim: true,
+      },
+      quantity: {
+        type: String,
         require: true,
         trim: true,
       },

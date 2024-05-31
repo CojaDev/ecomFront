@@ -26,29 +26,45 @@ export async function POST(req: NextRequest) {
 
   // Handle the checkout.session.completed event
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as Stripe.Checkout.Session;
+    const session = event.data.object;
+
+    const recipient = [
+      {
+        name: session?.customer_details?.name,
+        email: session?.customer_details?.email,
+        address: {
+          street: session?.shipping_details?.address?.line1,
+          city: session?.shipping_details?.address?.city,
+          state: session?.shipping_details?.address?.state,
+          postalCode: session?.shipping_details?.address?.postal_code,
+          country: session?.shipping_details?.address?.country,
+        },
+      },
+    ];
+
+    const retrieveSession = await stripe.checkout.sessions.retrieve(
+      session.id,
+      { expand: ['line_items.data.price.product'] }
+    );
+
+    const lineItems = await retrieveSession?.line_items?.data;
+
+    const products = lineItems?.map((item: any) => {
+      return [
+        {
+          product: item.price.product.metadata.productId,
+          color: item.price.product.metadata.color || 'N/A',
+          size: item.price.product.metadata.size || 'N/A',
+          quantity: item.quantity,
+        },
+      ];
+    });
 
     // Save the order to your database
     await mongooseConnect();
     const order = new Orders({
-      recipient: [
-        {
-          name: session.customer_details!.name!,
-          email: session.customer_details!.email!,
-          address: {
-            street: session.customer_details!.address!.line1!,
-            city: session.customer_details!.address!.city!,
-            state: session.customer_details!.address!.state!,
-            postalCode: session.customer_details!.address!.postal_code!,
-            country: session.customer_details!.address!.country!,
-          },
-        },
-      ],
-      products: session.line_items!.data.map((item: Stripe.LineItem) => ({
-        productName: item.description!,
-        price: item.price!.unit_amount! / 100,
-        expenses: 0, // Adjust this field based on your requirements
-      })),
+      recipient: recipient,
+      products: products,
       status: 'Paid',
     });
 
