@@ -15,6 +15,7 @@ const SuccessPage = () => {
 
   useEffect(() => {
     if (session_id) {
+      console.log(session_id);
       cart.clearCart();
       axios
         .post('/api/orders', { session_id })
