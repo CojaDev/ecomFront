@@ -1,4 +1,3 @@
-// app/api/orders/complete/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { mongooseConnect } from '../../../lib/mongoose';
@@ -28,6 +27,38 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ order }, { status: 200 });
   } catch (error) {
     console.error('Error completing order:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const email = searchParams.get('email');
+  const orderId = searchParams.get('orderId');
+
+  try {
+    await mongooseConnect();
+
+    let order;
+    if (email) {
+      order = await Orders.findOne({
+        'recipient.email': email,
+        status: 'Paid',
+      });
+    } else if (orderId) {
+      order = await Orders.findById(orderId);
+    }
+
+    if (!order) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ order }, { status: 200 });
+  } catch (error) {
+    console.error('Error retrieving order:', error);
     return NextResponse.json(
       { error: 'Internal Server Error' },
       { status: 500 }

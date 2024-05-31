@@ -7,33 +7,8 @@ import { Suspense, useEffect } from 'react';
 import HeaderStore from '@/components/HeaderStore';
 import { useSearchParams } from 'next/navigation';
 
-const SuccessPage = () => {
-  const cart = useCart();
-
-  if (!cart) {
-    return (
-      <Layout>
-        <div className="w-full h-[85vh] flex justify-center items-center">
-          <h2 className="text-8xl font-serif">Loading...</h2>
-        </div>
-      </Layout>
-    );
-  }
-  return (
-    <Layout>
-      <HeaderStore title="Payment Success" />
-      <Suspense fallback={<div>Loading...</div>}>
-        <HandleSearchParams />
-      </Suspense>
-      <ProductList title="You Might Also Like" />
-    </Layout>
-  );
-};
-
-const HandleSearchParams = () => {
+const HandleSearchParams = ({ cart }: any) => {
   const searchParams = useSearchParams();
-  const cart = useCart();
-
   const session_id = searchParams.get('session_id');
 
   useEffect(() => {
@@ -51,7 +26,21 @@ const HandleSearchParams = () => {
     }
   }, [session_id]);
 
-  return null;
+  return null; // This component does not need to render anything
+};
+
+const SuccessPage = () => {
+  const cart = useCart();
+
+  return (
+    <Layout>
+      <HeaderStore title="Payment Success" />
+      <Suspense fallback={<div>Loading...</div>}>
+        <HandleSearchParams cart={cart} />
+      </Suspense>
+      <ProductList title="You Might Also Like" />
+    </Layout>
+  );
 };
 
 export default SuccessPage;
