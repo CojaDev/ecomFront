@@ -14,7 +14,3 @@ export const getStore = async () => {
   const store = await axios.get('/api/store');
   return store.data;
 };
-export const postOrders = async (session_id: string) => {
-  const store = await axios.post('/api/orders', { session_id });
-  return store.data;
-};
