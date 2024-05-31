@@ -7,13 +7,6 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
   typescript: true,
 });
 
-// Use a middleware to disable body parsing for this route
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(req: NextRequest) {
   const buf = await req.arrayBuffer();
   const sig = req.headers.get('stripe-signature') as string;
