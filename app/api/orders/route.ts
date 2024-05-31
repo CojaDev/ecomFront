@@ -1,4 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+// app/api/orders/complete/route.ts
+import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { mongooseConnect } from '../../../lib/mongoose';
 import Orders from '../../models/Orders';
@@ -7,39 +8,29 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
   typescript: true,
 });
 
-type Data = {
-  error?: string;
-  order?: any;
-};
+export async function POST(req: NextRequest) {
+  const { session_id } = await req.json();
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
-  if (req.method === 'POST') {
-    const { session_id } = req.body;
+  try {
+    const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    try {
-      const session = await stripe.checkout.sessions.retrieve(session_id);
+    // Ensure the order has been saved by the webhook
+    await mongooseConnect();
+    const order = await Orders.findOne({
+      'recipient.email': session.customer_details!.email,
+      status: 'Paid',
+    });
 
-      // Ensure the order has been saved by the webhook
-      await mongooseConnect();
-      const order = await Orders.findOne({
-        'recipient.email': session.customer_details!.email,
-        status: 'Paid',
-      });
-
-      if (!order) {
-        return res.status(404).json({ error: 'Order not found' });
-      }
-
-      res.status(200).json({ order });
-    } catch (error) {
-      console.error('Error completing order:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+    if (!order) {
+      return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     }
-  } else {
-    res.setHeader('Allow', 'POST');
-    res.status(405).end('Method Not Allowed');
+
+    return NextResponse.json({ order }, { status: 200 });
+  } catch (error) {
+    console.error('Error completing order:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
