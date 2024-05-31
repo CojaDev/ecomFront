@@ -49,30 +49,30 @@ const ordersSchema = new Schema({
     {
       product: {
         type: String,
-        require: true,
+        required: true,
         trim: true,
       },
       color: {
         type: String,
-        require: true,
+        required: true,
         trim: true,
       },
       size: {
         type: String,
-        require: true,
+        required: true,
         trim: true,
       },
       quantity: {
         type: String,
-        require: true,
+        required: true,
         trim: true,
       },
     },
   ],
   created: {
-    type: Date, // Changed type to Date to store dates
+    type: Date,
     required: true,
-    default: Date.now, // Set default value to current date
+    default: Date.now,
   },
   status: {
     type: String,

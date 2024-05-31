@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
-  const signature = req.headers.get('Stripe-Signature') as string;
+  const signature = req.headers.get('stripe-signature') as string;
 
   let event: Stripe.Event;
 
@@ -26,18 +26,18 @@ export async function POST(req: NextRequest) {
 
   // Handle the checkout.session.completed event
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
+    const session = event.data.object as Stripe.Checkout.Session;
 
     const recipient = [
       {
-        name: session?.customer_details?.name,
-        email: session?.customer_details?.email,
+        name: session.customer_details?.name ?? '',
+        email: session.customer_details?.email ?? '',
         address: {
-          street: session?.shipping_details?.address?.line1,
-          city: session?.shipping_details?.address?.city,
-          state: session?.shipping_details?.address?.state,
-          postalCode: session?.shipping_details?.address?.postal_code,
-          country: session?.shipping_details?.address?.country,
+          street: session.shipping_details?.address?.line1 ?? '',
+          city: session.shipping_details?.address?.city ?? '',
+          state: session.shipping_details?.address?.state ?? '',
+          postalCode: session.shipping_details?.address?.postal_code ?? '',
+          country: session.shipping_details?.address?.country ?? '',
         },
       },
     ];
@@ -47,18 +47,15 @@ export async function POST(req: NextRequest) {
       { expand: ['line_items.data.price.product'] }
     );
 
-    const lineItems = await retrieveSession?.line_items?.data;
+    const lineItems = retrieveSession?.line_items?.data;
 
-    const products = lineItems?.map((item: any) => {
-      return [
-        {
-          product: item.price.product.metadata.productId,
-          color: item.price.product.metadata.color || 'N/A',
-          size: item.price.product.metadata.size || 'N/A',
-          quantity: item.quantity,
-        },
-      ];
-    });
+    const products = lineItems?.map((item) => ({
+      product:
+        (item.price?.product as Stripe.Product)?.metadata?.productId ?? 'N/A',
+      color: (item.price?.product as Stripe.Product)?.metadata?.color ?? 'N/A',
+      size: (item.price?.product as Stripe.Product)?.metadata?.size ?? 'N/A',
+      quantity: item.quantity?.toString() ?? 'N/A',
+    }));
 
     // Save the order to your database
     await mongooseConnect();
@@ -66,6 +63,7 @@ export async function POST(req: NextRequest) {
       recipient: recipient,
       products: products,
       status: 'Paid',
+      created: new Date(),
     });
 
     await order.save();
