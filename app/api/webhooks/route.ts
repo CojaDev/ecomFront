@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
-  const signature = req.headers.get('stripe-signature') as string;
+  const signature = req.headers.get('Stripe-Signature') as string;
 
   let event: Stripe.Event;
 
