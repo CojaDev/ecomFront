@@ -13,6 +13,12 @@ export async function POST(req: NextRequest) {
     const rawBody = await req.text();
     const signature = req.headers.get('stripe-signature') as string;
 
+    if (!signature) {
+      return new NextResponse('Missing stripe-signature header', {
+        status: 400,
+      });
+    }
+
     const event = stripe.webhooks.constructEvent(
       rawBody,
       signature,
@@ -21,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     // Handle the checkout.session.completed event
     if (event.type === 'checkout.session.completed') {
-      const session = event.data.object;
+      const session = event.data.object as Stripe.Checkout.Session;
 
       const recipient = [
         {
@@ -42,7 +48,7 @@ export async function POST(req: NextRequest) {
         { expand: ['line_items.data.price.product'] }
       );
 
-      const lineItems = retrieveSession?.line_items?.data;
+      const lineItems = retrieveSession.line_items?.data;
 
       const products = lineItems?.map((item) => ({
         product:
@@ -69,7 +75,7 @@ export async function POST(req: NextRequest) {
       status: 200,
     });
   } catch (err: any) {
-    console.log('[webhooks_POST]', err);
+    console.log('[webhooks_POST]', err.message || err);
     return new NextResponse('Failed to create the order', { status: 500 });
   }
 }
