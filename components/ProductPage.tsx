@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import useCart from '@/lib/useCart';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
-
+import axios from 'axios';
 interface ProductData {
   name: string;
   category: string;
@@ -60,10 +60,28 @@ const ProductPage = ({
       toast.error('Please select a color and size.');
     }
   };
+
+  const handleCheckout = async () => {
+    if (cart.cartItems.length > 0) {
+      try {
+        await axios
+          .post('/api/checkout', { cartItems: cart.cartItems })
+          .then((res: any) => {
+            cart.clearCart();
+            const { data } = res;
+            console.log(data);
+            window.location.href = data.url;
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <section className="relative w-full p-10 md:mt-10 mt-0 flex flex-col gap-3 max-w-[1455px] mx-auto mb-32 ">
       {activeColor !== null && activeSize !== null && openModal && (
-        <div className="fixed w-1/3  border flex flex-col gap-2  py-3 px-4 border-black dark:border-white bg-white dark:bg-[#120F0D] shadow-sm shadow-black dark:shadow-white top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50">
+        <div className="fixed lg:w-1/3 w-full  border flex flex-col gap-2  py-3 px-4 border-black dark:border-white bg-white dark:bg-[#120F0D] shadow-sm shadow-black dark:shadow-white top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 z-50">
           <div
             className="w-5 h-5 absolute right-2 top-2 cursor-pointer active:scale-90 transition-all"
             onClick={() => {
@@ -125,7 +143,7 @@ const ProductPage = ({
           </div>
           <div className="flex gap-10 w-full mt-3 mb-2">
             <Link
-              href={'/store/' + product._id}
+              href={'/cart'}
               draggable={false}
               aria-label="Product"
               className="flex-1 w-full active:scale-95 transition-all"
@@ -137,7 +155,9 @@ const ProductPage = ({
                 View Cart ({cart.cartItems.length})
               </Button>
             </Link>
-            <Button className="flex-1">Checkout</Button>
+            <Button onClick={handleCheckout} className="flex-1">
+              Checkout
+            </Button>
           </div>
         </div>
       )}

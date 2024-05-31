@@ -1,54 +1,45 @@
-import Orders from '../../models/Orders';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import Stripe from 'stripe';
 import { mongooseConnect } from '../../../lib/mongoose';
-import { NextRequest, NextResponse } from 'next/server';
+import Orders from '../../models/Orders';
 
-const updateIndexes = async () => {
-  try {
-    const products = await Orders.find().sort({ _id: 1 });
-    for (let i = 0; i < products.length; i++) {
-      products[i].index = i;
-      await products[i].save();
-    }
-  } catch (error) {
-    console.error('Error updating indexes:', error);
-  }
+const stripe = new Stripe(process.env.NEXT_PUBLIC_SECRET_STRIPE_KEY!, {
+  typescript: true,
+});
+
+type Data = {
+  error?: string;
+  order?: any;
 };
 
-updateIndexes();
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  if (req.method === 'POST') {
+    const { session_id } = req.body;
 
-export async function POST(request: any) {
-  try {
-    await mongooseConnect();
-    const {
-      name,
-      description,
-      currency,
-      address,
-      admins,
-      ig,
-      fb,
-      yt,
-      customLink,
-    } = await request.json();
-    const newOrder = new Orders({
-      name,
-      description,
-      currency,
-      address,
-      admins,
-      ig,
-      fb,
-      yt,
-      customLink,
-    });
-    await newOrder.save();
+    try {
+      const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    return NextResponse.json({ message: 'Order created successfully' });
-  } catch (error) {
-    console.error('Error creating Order:', error);
-    return NextResponse.json(
-      { message: 'Failed to create Order' },
-      { status: 500 }
-    );
+      // Ensure the order has been saved by the webhook
+      await mongooseConnect();
+      const order = await Orders.findOne({
+        'recipient.email': session.customer_details!.email,
+        status: 'Paid',
+      });
+
+      if (!order) {
+        return res.status(404).json({ error: 'Order not found' });
+      }
+
+      res.status(200).json({ order });
+    } catch (error) {
+      console.error('Error completing order:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  } else {
+    res.setHeader('Allow', 'POST');
+    res.status(405).end('Method Not Allowed');
   }
 }

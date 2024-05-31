@@ -189,8 +189,12 @@ const Footer = () => {
             {storeData.faq.length > 1 &&
               storeData.faq.slice(0, 3).map((question, index: number) => (
                 <AccordionItem key={index} value={`item-1${index}`}>
-                  <AccordionTrigger>{question.question}</AccordionTrigger>
-                  <AccordionContent>{question.answer}</AccordionContent>
+                  <AccordionTrigger className="text-left">
+                    {question.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-left">
+                    {question.answer}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
           </Accordion>

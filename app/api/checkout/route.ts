@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-
+import Store from '../../models/Store';
+import { mongooseConnect } from '../../../lib/mongoose';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -13,6 +14,9 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
+    await mongooseConnect();
+    const store = await Store.findOne();
+    const currency = store.currency.toLowerCase();
     const { cartItems } = await req.json();
 
     if (!cartItems) {
@@ -27,7 +31,7 @@ export async function POST(req: NextRequest) {
       type: 'fixed_amount',
       fixed_amount: {
         amount: 50000,
-        currency: 'rsd',
+        currency: currency,
       },
     });
     const session = await stripe.checkout.sessions.create({
@@ -40,7 +44,7 @@ export async function POST(req: NextRequest) {
 
       line_items: cartItems.map((cartItem: any) => ({
         price_data: {
-          currency: 'rsd',
+          currency: currency,
           product_data: {
             name: cartItem.item.name,
             metadata: {
@@ -54,7 +58,7 @@ export async function POST(req: NextRequest) {
         quantity: cartItem.quantity,
       })),
       client_reference_id: 'guest',
-      success_url: `${process.env.STORE_URL}/payment_success`,
+      success_url: `${process.env.STORE_URL}/payment_success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.STORE_URL}/cart`,
     });
 

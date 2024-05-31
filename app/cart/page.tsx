@@ -32,7 +32,6 @@ const Cart = () => {
         await axios
           .post('/api/checkout', { cartItems: cart.cartItems })
           .then((res: any) => {
-            cart.clearCart();
             const { data } = res;
             console.log(data);
             window.location.href = data.url;
