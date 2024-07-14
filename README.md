@@ -12,15 +12,6 @@ This project is a comprehensive e-commerce platform with separate websites for t
 
 ## Features
 
-### Admin Site
-
-- **Product Management**: Add, edit, and delete products.
-- **Order Management**: View and update order statuses.
-- **User Management**: Manage user accounts and permissions.
-- **Dashboard**: Overview of sales, orders, and user activity.
-
-### Shop Site
-
 - **Product Listings**: Browse products by categories, search, and filters.
 - **Product Details**: View detailed information about each product.
 - **Shopping Cart**: Add products to the cart, update quantities, and remove items.
