@@ -60,7 +60,7 @@ This project is a comprehensive e-commerce platform with separate websites for t
     npm run dev
     ```
 
-5. Open your browser and visit `http://localhost:3000` to view the shop site and `http://localhost:3000/admin` to view the admin site.
+5. Open your browser and visit `http://localhost:3000` to view the shop site.
 
 ## Usage
 
