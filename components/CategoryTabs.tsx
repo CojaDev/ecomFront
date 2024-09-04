@@ -51,7 +51,7 @@ const CategoryTabs = () => {
                 className="object-cover h-full w-full hover:scale-110 transition-all grayscale  hover:grayscale-0"
               />
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-black/20 flex justify-center items-center">
-                <h2 className="text-white text-[3.5rem] font-serif">
+                <h2 className="text-white text-[3.5rem] font-serif text-center">
                   {category.name}
                 </h2>
               </div>
