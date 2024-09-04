@@ -69,7 +69,7 @@ const ProductList = ({ title }: Title) => {
         <h2 className="text-5xl font-serif text-center">{title}</h2>
         <div className="md:w-[5%] w-[28%] bg-black dark:bg-white h-1" />
       </div>
-      <div className="flex md:flex-row flex-col w-full max-w-7xl ">
+      <div className="flex md:flex-row flex-col justify-center w-full max-w-7xl ">
         <Carousel className="">
           <CarouselContent className="lg:p-2 p-1 gap-2 lg:m-4 m-0">
             {productsToDisplay.map((product) => (
