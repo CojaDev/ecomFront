@@ -143,7 +143,12 @@ const Footer = () => {
                   className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
                   <img
-                    src={`https://${domain}/favicon.ico`}
+                  src={
+  storeData.customLink && storeData.customLink.includes('tiktok') 
+    ? 'https://www.tiktok.com/favicon.ico' 
+    : `https://${domain}/favicon.ico`
+}
+
                     alt="fav"
                     className={`w-6 h-6 rounded-lg grayscale ${
                       domain?.includes('github') ? 'invert dark:invert-0' : ''
