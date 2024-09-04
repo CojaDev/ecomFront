@@ -127,7 +127,7 @@ const Footer = () => {
   />
 ) : (
   <IoLogoYoutube className="w-5 h-5" />
-)}
+)</a>}
 
             {storeData.fb &&
               storeData.fb !== '' &&
