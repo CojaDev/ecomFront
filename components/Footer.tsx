@@ -207,7 +207,7 @@ const Footer = () => {
         </h2>
         <h2 className="md:text-left text-center">
           Developed by{' '}
-          <a target="blank" href="https://github.com/CojaDev">
+          <a target="blank" href="https://portfolio-coja.vercel.app">
             CojaDev
           </a>
         </h2>
