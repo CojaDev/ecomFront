@@ -63,8 +63,8 @@ const Footer = () => {
     return null;
   }
   return (
-    <footer className="w-screen flex flex-col gap-2 bg-[#120F0D] text-white dark:bg-white dark:text-black mt-28 min-h-[36rem] py-4 px-6  items-center">
-      <div className="flex md:flex-row flex-col md:gap-2 gap-6 max-w-[1450px] w-full pt-16 ">
+    <footer className="w-screen flex flex-col gap-2 bg-[#120F0D] text-white dark:bg-white dark:text-black mt-28 min-h-[36rem] py-4 px-6 items-center">
+      <div className="flex md:flex-row flex-col md:gap-2 gap-6 max-w-[1450px] w-full pt-16">
         <div className="flex flex-col gap-2 flex-1">
           <h2 className="font-serif text-3xl mb-2">Contact Info</h2>
           <p className="opacity-60">{storeData.address}</p>
@@ -74,7 +74,7 @@ const Footer = () => {
               <p className="opacity-60">Instagram: </p>
               <a
                 href={storeData.ig}
-                target="blank"
+                target="_blank"
                 className="opacity-85 hover:opacity-100 transition-all-slow"
               >
                 {storeData.ig.replace('https://www.instagram.com/', '@')}
@@ -90,86 +90,79 @@ const Footer = () => {
           )}
 
           <div className="socials flex gap-1.5 mt-2">
-            {storeData.ig &&
-              storeData.ig !== '' &&
-              isValidUrl(storeData.ig) && (
+            {storeData.ig && isValidUrl(storeData.ig) && (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                draggable={false}
+                href={storeData.ig}
+                className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+              >
+                <FaInstagram className="w-5 h-5" />
+              </a>
+            )}
+
+            {storeData.yt && isValidUrl(storeData.yt) && (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                draggable={false}
+                href={storeData.yt}
+                className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+              >
+                {storeData.yt.includes('tiktok') ? (
+                  <img
+                    src="https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png"
+                    alt="fav"
+                    className={`w-6 h-6 rounded-lg grayscale ${
+                      domain?.includes('github') || domain?.includes('youtube')
+                        ? 'invert dark:invert-0'
+                        : ''
+                    } brightness-200`}
+                  />
+                ) : (
+                  <IoLogoYoutube className="w-5 h-5" />
+                )}
+              </a>
+            )}
+
+            {storeData.fb && isValidUrl(storeData.fb) && (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                draggable={false}
+                href={storeData.fb}
+                className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+              >
+                <FaFacebookSquare className="w-5 h-5" />
+              </a>
+            )}
+
+            {storeData.customLink &&
+              isValidUrl(storeData.customLink) && (
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-           <div className="socials flex gap-1.5 mt-2">
-  {storeData.ig && storeData.ig !== '' && isValidUrl(storeData.ig) && (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      draggable={false}
-      href={storeData.ig}
-      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
-    >
-      <FaInstagram className="w-5 h-5" />
-    </a>
-  )}
-
-  {storeData.yt && storeData.yt !== '' && isValidUrl(storeData.yt) && (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      draggable={false}
-      href={storeData.yt}
-      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
-    >
-      {storeData.yt.includes('tiktok') ? (
-        <img
-          src="https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png"
-          alt="fav"
-          className={`w-6 h-6 rounded-lg grayscale ${
-            domain?.includes('github') || domain?.includes('youtube')
-              ? 'invert dark:invert-0'
-              : ''
-          } brightness-200`}
-        />
-      ) : (
-        <IoLogoYoutube className="w-5 h-5" />
-      )}
-    </a>
-  )}
-
-  {storeData.fb && storeData.fb !== '' && isValidUrl(storeData.fb) && (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      draggable={false}
-      href={storeData.fb}
-      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
-    >
-      <FaFacebookSquare className="w-5 h-5" />
-    </a>
-  )}
-
-  {storeData.customLink && storeData.customLink !== '' && isValidUrl(storeData.customLink) && (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      draggable={false}
-      href={storeData.customLink}
-      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
-    >
-      <img
-        src={
-          storeData.customLink.includes('tiktok') 
-            ? 'https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png' 
-            : `https://${domain}/favicon.ico`
-        }
-        alt="fav"
-        className={`w-6 h-6 rounded-lg grayscale ${
-          domain?.includes('github') ? 'invert dark:invert-0' : ''
-        }  ${
-          domain?.includes('youtube') ? 'invert dark:invert-0' : ''
-        } brightness-200`}
-      />
-    </a>
-  )}
-</div>
-
+                  draggable={false}
+                  href={storeData.customLink}
+                  className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+                >
+                  <img
+                    src={
+                      storeData.customLink.includes('tiktok')
+                        ? 'https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png'
+                        : `https://${domain}/favicon.ico`
+                    }
+                    alt="fav"
+                    className={`w-6 h-6 rounded-lg grayscale ${
+                      domain?.includes('github') ? 'invert dark:invert-0' : ''
+                    } ${
+                      domain?.includes('youtube') ? 'invert dark:invert-0' : ''
+                    } brightness-200`}
+                  />
+                </a>
+              )}
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
