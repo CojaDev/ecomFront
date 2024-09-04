@@ -58,7 +58,8 @@ const Footer = () => {
       /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
     return urlPattern.test(url);
   };
-  const domain = storeData && new URL(storeData.customLink).hostname;
+const domain = storeData?.customLink ? new URL(storeData.customLink).hostname : null;
+
   if (!storeData) {
     return null;
   }
