@@ -114,9 +114,20 @@ const Footer = () => {
                   href={storeData.yt}
                   className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
                 >
-                  <IoLogoYoutube className="w-5 h-5" />
-                </a>
-              )}
+                  {
+{storeData.yt && storeData.yt.includes('tiktok') ? (
+  <img
+    src="https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png"
+    alt="fav"
+    className={`w-6 h-6 rounded-lg grayscale ${
+      domain?.includes('github') || domain?.includes('youtube')
+        ? 'invert dark:invert-0'
+        : ''
+    } brightness-200`}
+  />
+) : (
+  <IoLogoYoutube className="w-5 h-5" />
+)}
 
             {storeData.fb &&
               storeData.fb !== '' &&
