@@ -145,7 +145,7 @@ const Footer = () => {
                   <img
                   src={
   storeData.customLink && storeData.customLink.includes('tiktok') 
-    ? 'https://www.tiktok.com/favicon.ico' 
+    ? 'https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png' 
     : `https://${domain}/favicon.ico`
 }
 
