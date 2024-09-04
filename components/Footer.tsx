@@ -96,80 +96,80 @@ const Footer = () => {
                 <a
                   target="_blank"
                   rel="noopener noreferrer"
-                  draggable={false}
-                  href={storeData.ig}
-                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
-                >
-                  <FaInstagram className="w-5 h-5" />
-                </a>
-              )}
+           <div className="socials flex gap-1.5 mt-2">
+  {storeData.ig && storeData.ig !== '' && isValidUrl(storeData.ig) && (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      draggable={false}
+      href={storeData.ig}
+      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+    >
+      <FaInstagram className="w-5 h-5" />
+    </a>
+  )}
 
-            {storeData.yt &&
-              storeData.yt !== '' &&
-              isValidUrl(storeData.yt) && (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  draggable={false}
-                  href={storeData.yt}
-                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
-                >
-                  {
-{storeData.yt && storeData.yt.includes('tiktok') ? (
-  <img
-    src="https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png"
-    alt="fav"
-    className={`w-6 h-6 rounded-lg grayscale ${
-      domain?.includes('github') || domain?.includes('youtube')
-        ? 'invert dark:invert-0'
-        : ''
-    } brightness-200`}
-  />
-) : (
-  <IoLogoYoutube className="w-5 h-5" />
-)</a>}
+  {storeData.yt && storeData.yt !== '' && isValidUrl(storeData.yt) && (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      draggable={false}
+      href={storeData.yt}
+      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+    >
+      {storeData.yt.includes('tiktok') ? (
+        <img
+          src="https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png"
+          alt="fav"
+          className={`w-6 h-6 rounded-lg grayscale ${
+            domain?.includes('github') || domain?.includes('youtube')
+              ? 'invert dark:invert-0'
+              : ''
+          } brightness-200`}
+        />
+      ) : (
+        <IoLogoYoutube className="w-5 h-5" />
+      )}
+    </a>
+  )}
 
-            {storeData.fb &&
-              storeData.fb !== '' &&
-              isValidUrl(storeData.fb) && (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  draggable={false}
-                  href={storeData.fb}
-                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
-                >
-                  <FaFacebookSquare className="w-5 h-5" />
-                </a>
-              )}
+  {storeData.fb && storeData.fb !== '' && isValidUrl(storeData.fb) && (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      draggable={false}
+      href={storeData.fb}
+      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+    >
+      <FaFacebookSquare className="w-5 h-5" />
+    </a>
+  )}
 
-            {storeData.customLink &&
-              storeData.customLink !== '' &&
-              isValidUrl(storeData.customLink) && (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  draggable={false}
-                  href={storeData.customLink}
-                  className="p-3 bg-gray-500/30  opacity-70 hover:opacity-100 transition-all"
-                >
-                  <img
-                  src={
-  storeData.customLink && storeData.customLink.includes('tiktok') 
-    ? 'https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png' 
-    : `https://${domain}/favicon.ico`
-}
+  {storeData.customLink && storeData.customLink !== '' && isValidUrl(storeData.customLink) && (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      draggable={false}
+      href={storeData.customLink}
+      className="p-3 bg-gray-500/30 opacity-70 hover:opacity-100 transition-all"
+    >
+      <img
+        src={
+          storeData.customLink.includes('tiktok') 
+            ? 'https://seeklogo.com/images/T/tiktok-app-icon-logo-0F5AD7AE01-seeklogo.com.png' 
+            : `https://${domain}/favicon.ico`
+        }
+        alt="fav"
+        className={`w-6 h-6 rounded-lg grayscale ${
+          domain?.includes('github') ? 'invert dark:invert-0' : ''
+        }  ${
+          domain?.includes('youtube') ? 'invert dark:invert-0' : ''
+        } brightness-200`}
+      />
+    </a>
+  )}
+</div>
 
-                    alt="fav"
-                    className={`w-6 h-6 rounded-lg grayscale ${
-                      domain?.includes('github') ? 'invert dark:invert-0' : ''
-                    }  ${
-                      domain?.includes('youtube') ? 'invert dark:invert-0' : ''
-                    } brightness-200`}
-                  />
-                </a>
-              )}
-          </div>
         </div>
 
         <div className="flex flex-col gap-2 flex-1">
